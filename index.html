@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Somando com os Dedinhos</title>
+<meta name="description" content="Folha autoral de adição até 10 com os dedos das mãos (Pré e 1º ano): contar, digitar, ligar e mostrar com os dedos, com voz em tudo e somas sorteadas a cada abertura.">
+<!-- ============================================================
+     SOMANDO COM OS DEDINHOS — a 1ª FOLHA AUTORAL (8/set/2026)
+     Nasceu do teste da "folha viva" (a folha de PDF resolvida no computador) e das
+     ordens do Marcos que vieram em seguida: *"criar a mesma coisa só que por você,
+     mudando algo do conteúdo, cores, imagens, para ser algo autoral"*, *"sempre
+     remover cabeçalho"*, *"variar as somas, para não dar o mesmo resultado sempre"*.
+     O MODELO foram 40 folhas reais de "adição com os dedos" achadas pela busca de
+     imagem (_pesquisa/fotos/ddg-soma-dedos): mão + mão = quadradinho, ligar mãos ao
+     número, mostrar com os dedos. Daqui em diante, nada é copiado:
+       · as MÃOS são desenhadas em vetor (SVG), com o número EXATO de dedos — gerador
+         de imagem erra dedo, e numa folha de contar dedo isso é fatal;
+       · as SOMAS são SORTEADAS a cada abertura (resultados vizinhos nunca iguais);
+       · não há cabeçalho de escola/data: o nome da criança fica numa barra nossa;
+       · voz da casa em tudo (FALAS enumeradas pelo gerar_falas.py, mp3 pelo
+         entregar.yml); erro nunca é "errou"; retoma 55 min; relatório na medalha.
+     ES5 puro (Chrome 109 / Firefox 106), um arquivo, sem biblioteca.
+     ============================================================ -->
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#dfeee0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 39.5h40M39.5 0v40' stroke='%23cfe2d0' stroke-width='1'/%3E%3C/svg%3E");color:#2b2118;padding-bottom:150px}
+#topo{position:-webkit-sticky;position:sticky;top:0;z-index:20;background:#fff8ea;border-bottom:3px solid #d9b56a;box-shadow:0 2px 8px rgba(60,40,10,.15);padding:8px 10px;display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto}
+#topo .tit{font-weight:800;font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{height:12px;background:#e6dcc4;border-radius:8px;overflow:hidden;flex:1;min-width:60px;max-width:220px}
+.prog i{display:block;height:100%;width:0;background:#43a047;border-radius:8px;-webkit-transition:width .5s;transition:width .5s}
+.pg{font-weight:800;font-size:14px;color:#6b4a1a;white-space:nowrap}
+button{font-family:inherit;cursor:pointer}
+.bt{min-width:44px;min-height:44px;border:0;border-radius:14px;background:#f5b400;color:#3a2600;font-weight:800;font-size:17px;padding:8px 16px;box-shadow:0 3px 0 #b98400;-webkit-transition:transform .08s;transition:transform .08s}
+.bt:active{transform:translateY(2px);box-shadow:0 1px 0 #b98400}
+.bt[disabled]{opacity:.45;cursor:default;box-shadow:none}
+.bt.cinza{background:#e6dcc4;color:#5b4a2a;box-shadow:0 3px 0 #b9ad92}
+.bt.verde{background:#43a047;color:#fff;box-shadow:0 3px 0 #2e7031}
+.zap{width:40px;height:40px;border-radius:50%;border:0;background:#f5b400;box-shadow:0 2px 0 #b98400;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.zap svg{width:22px;height:22px;fill:#3a2600}
+.zap.off{background:#c9c0ac}
+.zap.ouvir{background:#fff;box-shadow:0 2px 0 #cbbf9f;border:2px solid #d9a520}
+.zap.ouvir.tocando{-webkit-animation:pulsa 1s infinite;animation:pulsa 1s infinite}
+#livro{max-width:760px;margin:10px auto 0;padding:0 8px}
+/* A FOLHA: papel branco, faixa colorida de título (o cabeçalho de escola/data não existe) */
+.pagina{position:relative;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(50,30,0,.22);display:none;overflow:hidden;padding:0 0 18px}
+.pagina.viva{display:block;-webkit-animation:entra .35s ease-out;animation:entra .35s ease-out}
+@-webkit-keyframes entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.faixa{background:#43a047;color:#fff;padding:14px 16px 12px;display:flex;align-items:center;gap:12px}
+.faixa h2{margin:0;font-size:clamp(18px,4.6vw,26px);letter-spacing:.5px;text-transform:uppercase;flex:1}
+.faixa .num{background:#fff;color:#2e7031;font-weight:900;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}
+.pagina.p2 .faixa{background:#1e88e5}.pagina.p2 .faixa .num{color:#1e88e5}
+.pagina.p3 .faixa{background:#8e24aa}.pagina.p3 .faixa .num{color:#8e24aa}
+.pagina.p4 .faixa{background:#e65100}.pagina.p4 .faixa .num{color:#e65100}
+.pagina.p5 .faixa{background:#c2185b}.pagina.p5 .faixa .num{color:#c2185b}
+.enun{margin:12px 16px 4px;font-size:clamp(15px,3.6vw,19px);font-weight:700;color:#3a2600;line-height:1.3}
+/* linhas de exercício */
+.linha{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.5vw,12px);margin:8px 10px;padding:10px 6px;border:2px solid #efe6cf;border-radius:14px;background:#fffdf7;flex-wrap:nowrap}
+.linha .n{font-weight:900;color:#a08a5a;font-size:14px;width:22px;flex:none}
+.mao{display:inline-block;flex:none}
+.mao svg{width:clamp(50px,14vw,92px);height:auto;display:block}
+.sinal{font-weight:900;font-size:clamp(22px,6vw,40px);color:#3a2600;flex:none;width:clamp(18px,5vw,36px);text-align:center}
+.resp{position:relative;min-width:44px;min-height:44px;width:clamp(54px,14vw,80px);height:clamp(54px,14vw,80px);display:flex;align-items:center;justify-content:center;flex:none;
+  font-family:"Comic Sans MS","Chalkboard SE","Segoe Print","Bradley Hand",cursive;font-weight:700;color:#1d4ed8;font-size:clamp(24px,6vw,40px);
+  background:rgba(255,244,190,.55);border:3px dashed #d9a520;border-radius:12px;cursor:pointer;-webkit-transition:background .2s,border-color .2s;transition:background .2s,border-color .2s}
+.resp .zi{position:absolute;left:4px;top:4px;width:14px;height:14px;opacity:.55;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%233a2600' d='M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E") center/contain no-repeat}
+.resp.ativa .zi,.resp.certa .zi{display:none}
+.resp.ativa{border-style:solid;border-color:#f59e0b;background:rgba(255,236,150,.9);-webkit-animation:pulsa 1.2s infinite;animation:pulsa 1.2s infinite}
+@-webkit-keyframes pulsa{0%,100%{box-shadow:0 0 0 4px rgba(245,158,11,.35)}50%{box-shadow:0 0 0 9px rgba(245,158,11,.12)}}
+@keyframes pulsa{0%,100%{box-shadow:0 0 0 4px rgba(245,158,11,.35)}50%{box-shadow:0 0 0 9px rgba(245,158,11,.12)}}
+.resp.certa{border-style:solid;border-color:#43a047;background:rgba(200,240,200,.55);color:#1b5e20;cursor:default;-webkit-animation:none;animation:none}
+.resp.certa:after{content:"";position:absolute;right:-8px;top:-10px;width:26px;height:26px;border-radius:50%;background:#43a047 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 13l4 4L19 7' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/70% no-repeat;box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.resp.treme{-webkit-animation:treme .45s;animation:treme .45s;border-color:#e57373;background:rgba(255,205,205,.7)}
+@-webkit-keyframes treme{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes treme{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.resp .cursor{display:inline-block;width:3px;height:60%;background:#1d4ed8;margin-left:2px;-webkit-animation:pisca 1s steps(1) infinite;animation:pisca 1s steps(1) infinite}
+@-webkit-keyframes pisca{50%{opacity:0}}
+@keyframes pisca{50%{opacity:0}}
+/* ligar */
+.ligar{position:relative;display:flex;justify-content:space-between;gap:10px;margin:8px 12px;padding:6px}
+.ligar .col{display:flex;flex-direction:column;gap:10px;flex:1}
+.ponta{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;min-height:56px;border:3px solid #efe6cf;border-radius:14px;background:#fffdf7;cursor:pointer;touch-action:none;padding:6px;-webkit-transition:background .15s,border-color .15s;transition:background .15s,border-color .15s}
+.ponta.maos .mao svg{width:clamp(40px,10vw,66px)}
+.ponta.numero{font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:900;font-size:clamp(26px,7vw,44px);color:#3a2600;min-width:70px;max-width:120px;align-self:center;width:100%}
+.ponta.marcada{border-color:#f59e0b;background:rgba(255,236,150,.55);-webkit-animation:pulsa 1.2s infinite;animation:pulsa 1.2s infinite}
+.ponta.feita{border-color:#43a047;background:rgba(200,240,200,.35);cursor:default}
+.ponta.treme{-webkit-animation:treme .45s;animation:treme .45s;border-color:#e57373}
+.ponta.mostra{border-color:#f59e0b;border-style:dashed;-webkit-animation:pulsa 1.2s infinite;animation:pulsa 1.2s infinite}
+svg.linhas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+/* mostrar com os dedos */
+.mostrar{margin:8px 12px;padding:10px;border:2px solid #efe6cf;border-radius:14px;background:#fffdf7}
+.alvo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:6px}
+.alvo .grande{font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:900;font-size:clamp(44px,12vw,72px);color:#e65100;line-height:1;min-width:64px;text-align:center}
+.alvo .txt{font-weight:800;color:#3a2600;font-size:clamp(15px,3.6vw,20px)}
+.maos2{display:flex;justify-content:center;gap:clamp(8px,4vw,30px);align-items:flex-end}
+.maos2 .mao svg{width:clamp(120px,36vw,190px)}
+.mao.viva svg rect.dedo,.mao.viva svg path.dedo{cursor:pointer}
+.contador{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:8px;font-weight:800;color:#3a2600;font-size:clamp(15px,3.6vw,19px)}
+.contador b{font-size:clamp(24px,6vw,34px);color:#1d4ed8;font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive}
+.igual{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:6px;font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:900;font-size:clamp(22px,6vw,34px);color:#3a2600;min-height:44px}
+.igual .ok{color:#1b5e20}
+.rodadas{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.rodadas i{width:12px;height:12px;border-radius:50%;background:#e6dcc4;display:block}
+.rodadas i.feita{background:#43a047}
+.rodadas i.atual{background:#f5b400}
+/* carimbo de pagina pronta */
+.carimbo{position:absolute;right:4%;top:60px;width:22%;min-width:90px;aspect-ratio:1/1;border-radius:50%;border:5px solid #43a047;color:#2e7d32;font-weight:900;font-size:clamp(14px,2.6vw,24px);display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.05;background:rgba(255,255,255,.85);transform:rotate(-14deg) scale(0);opacity:0;pointer-events:none;-webkit-transition:transform .5s cubic-bezier(.2,1.4,.4,1),opacity .3s;transition:transform .5s cubic-bezier(.2,1.4,.4,1),opacity .3s;z-index:5}
+.pagina.pronta .carimbo{transform:rotate(-14deg) scale(1);opacity:1}
+/* capa */
+.capa{text-align:center;padding:18px 16px 24px}
+.capa h1{margin:6px 0 4px;font-size:clamp(26px,7vw,44px);color:#2e7031;letter-spacing:1px;text-transform:uppercase;line-height:1.05}
+.capa .sub{font-weight:700;color:#6b4a1a;font-size:clamp(14px,3.6vw,18px);margin-bottom:10px}
+.capa .cena{display:flex;justify-content:center;align-items:flex-end;gap:clamp(6px,3vw,24px);margin:10px 0 6px}
+.capa .cena .mao svg{width:clamp(70px,20vw,130px)}
+.capa .cena img{width:clamp(90px,24vw,150px);height:auto}
+.capa .nomef{font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:700;color:#1d4ed8;font-size:clamp(18px,4.6vw,30px);min-height:36px;margin-top:8px}
+.capa .nomef.vazio{color:#a08a5a;font-family:"Segoe UI",Arial,sans-serif;font-size:14px;font-weight:600}
+#barraCapa{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff8ea;border-top:3px solid #d9b56a;box-shadow:0 -4px 14px rgba(60,40,10,.2);padding:10px 8px;display:none}
+#barraCapa.aberta{display:block}
+#barraCapa .lin{max-width:560px;margin:0 auto;display:flex;gap:10px;align-items:center}
+#barraCapa label{font-weight:800;color:#6b4a1a;font-size:14px;white-space:nowrap}
+#nomeIn{flex:1;min-width:0;min-height:48px;border:3px solid #d9a520;border-radius:12px;padding:0 12px;font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:700;font-size:22px;color:#1d4ed8;background:#fff}
+#nomeIn:focus{outline:none;border-color:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.3)}
+.comecar{font-size:clamp(18px,4vw,24px);padding:10px 22px;border-radius:40px;-webkit-animation:respira 1.6s infinite;animation:respira 1.6s infinite}
+@-webkit-keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+/* teclado na tela */
+#teclado{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff8ea;border-top:3px solid #d9b56a;box-shadow:0 -4px 14px rgba(60,40,10,.2);padding:8px 8px 10px;display:none}
+#teclado.aberto{display:block}
+#teclado .tk{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+#teclado button{min-height:54px;font-size:26px;font-weight:800;border:0;border-radius:12px;background:#fff;color:#1d4ed8;box-shadow:0 3px 0 #cbbf9f}
+#teclado button:active{transform:translateY(2px);box-shadow:0 1px 0 #cbbf9f}
+#teclado button.ap{color:#8d3b00;font-size:20px}
+#teclado button.ok{background:#43a047;color:#fff;box-shadow:0 3px 0 #2e7031;grid-column:span 2}
+#teclado .dica{max-width:520px;margin:0 auto 6px;font-size:14px;font-weight:700;color:#6b4a1a;text-align:center}
+#nav{max-width:760px;margin:12px auto 0;padding:0 8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#nav .meio{flex:1;text-align:center;font-weight:700;color:#6b4a1a;font-size:14px}
+#fim{max-width:560px;margin:14px auto;background:#fff8ea;border-radius:18px;padding:18px;box-shadow:0 6px 24px rgba(50,30,0,.2);text-align:center;display:none}
+#fim h2{margin:0 0 6px;color:#3a2600}
+.estrelas{display:flex;justify-content:center;gap:8px;margin:10px 0}
+.estrela{width:48px;height:48px;transform:scale(0);-webkit-transition:transform .5s cubic-bezier(.2,1.6,.4,1);transition:transform .5s cubic-bezier(.2,1.6,.4,1)}
+.estrela.acesa{transform:scale(1)}
+.barras{text-align:left;margin:10px auto;max-width:420px}
+.barra{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:14px;font-weight:700;color:#3a2600}
+.barra span{width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.barra .tr{flex:1;height:14px;background:#e6dcc4;border-radius:8px;overflow:hidden}
+.barra .tr i{display:block;height:100%;width:0;background:#43a047;-webkit-transition:width 1s;transition:width 1s}
+.medalha{width:120px;height:120px;margin:8px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe98a,#f5b400 60%,#b98400);box-shadow:0 6px 16px rgba(0,0,0,.25),inset 0 0 0 6px rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;color:#3a2600;font-weight:900;font-size:34px;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.medalha.segurando{transform:scale(.95)}
+#relatorio{display:none;text-align:left;background:#fff;border-radius:12px;padding:12px;margin-top:10px;font-size:14px;border:2px solid #d9b56a}
+#relatorio table{width:100%;border-collapse:collapse}
+#relatorio td,#relatorio th{padding:4px 6px;border-bottom:1px solid #eee;text-align:left}
+#retomar{max-width:560px;margin:14px auto;background:#fff8ea;border-radius:18px;padding:18px;box-shadow:0 6px 24px rgba(50,30,0,.2);text-align:center;display:none}
+.confete{position:fixed;top:-10px;width:10px;height:14px;z-index:40;pointer-events:none;-webkit-animation:cai 1.8s linear forwards;animation:cai 1.8s linear forwards}
+@-webkit-keyframes cai{to{transform:translateY(105vh) rotate(720deg)}}
+@keyframes cai{to{transform:translateY(105vh) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){*{-webkit-animation:none!important;animation:none!important;-webkit-transition:none!important;transition:none!important}}
+@media (min-width:900px){#livro,#topo,#nav{max-width:720px}}
+</style>
+</head>
+<body>
+<header id="topo">
+  <button class="zap ouvir" id="bOuvir" aria-label="Ouvir o que a página pede" title="Ouvir a página"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v3H4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v-8a5 5 0 0 1 10 0v8h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-1V9a7 7 0 0 0-7-7z"/></svg></button>
+  <button class="zap" id="bVoz" aria-label="Ligar ou desligar a narração" title="Narração"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button>
+  <div class="tit">Somando com os Dedinhos</div>
+  <div class="prog" aria-hidden="true"><i id="progI"></i></div>
+  <div class="pg" id="pg">Capa</div>
+</header>
+
+<div id="retomar" role="dialog" aria-live="polite">
+  <p style="font-weight:800;font-size:18px;margin:0 0 10px" id="retTxt">Você estava no meio da folha. Quer continuar de onde parou?</p>
+  <button class="bt verde" id="bRetSim">Continuar</button>
+  <button class="bt cinza" id="bRetNao">Começar do início</button>
+</div>
+
+<div id="livro"></div>
+
+<div id="nav">
+  <button class="bt cinza" id="bAnt">◀ Anterior</button>
+  <div class="meio" id="navTxt"></div>
+  <button class="bt" id="bProx">Próxima ▶</button>
+</div>
+
+<div id="fim" aria-live="polite">
+  <h2>Você somou tudo com os dedinhos!</h2>
+  <div class="estrelas" id="estrelas"></div>
+  <div class="barras" id="barras"></div>
+  <p id="fimTxt" style="font-weight:700;color:#3a2600"></p>
+  <div class="medalha" id="medalha" title="Medalha">★</div>
+  <div id="relatorio"></div>
+  <button class="bt cinza" id="bRever">Rever a folha</button>
+  <button class="bt verde" id="bRecomecar">Folha nova</button>
+</div>
+
+<div id="barraCapa"><div class="lin"><label for="nomeIn">Seu nome:</label><input id="nomeIn" type="text" maxlength="24" autocomplete="off" spellcheck="false" placeholder="escreva aqui"><button class="bt comecar" id="bComecar">Começar</button></div></div>
+<div id="teclado" aria-label="Teclado de números">
+  <div class="dica" id="tkDica">Digite quantos dedos</div>
+  <div class="tk" id="tk"></div>
+</div>
+
+<script>
+/*FALAS-INI*/
+var FALAS = {
+ "abaixeUns": "Abaixe alguns dedos.",
+ "capa": "Somando com os dedinhos! Escreva o seu nome ali embaixo e toque em Começar.",
+ "certo1_1": "Isso! Um mais um são dois.",
+ "certo1_2": "Isso! Um mais dois são três.",
+ "certo1_3": "Isso! Um mais três são quatro.",
+ "certo1_4": "Isso! Um mais quatro são cinco.",
+ "certo1_5": "Isso! Um mais cinco são seis.",
+ "certo2_1": "Isso! Dois mais um são três.",
+ "certo2_2": "Isso! Dois mais dois são quatro.",
+ "certo2_3": "Isso! Dois mais três são cinco.",
+ "certo2_4": "Isso! Dois mais quatro são seis.",
+ "certo2_5": "Isso! Dois mais cinco são sete.",
+ "certo3_1": "Isso! Três mais um são quatro.",
+ "certo3_2": "Isso! Três mais dois são cinco.",
+ "certo3_3": "Isso! Três mais três são seis.",
+ "certo3_4": "Isso! Três mais quatro são sete.",
+ "certo3_5": "Isso! Três mais cinco são oito.",
+ "certo4_1": "Isso! Quatro mais um são cinco.",
+ "certo4_2": "Isso! Quatro mais dois são seis.",
+ "certo4_3": "Isso! Quatro mais três são sete.",
+ "certo4_4": "Isso! Quatro mais quatro são oito.",
+ "certo4_5": "Isso! Quatro mais cinco são nove.",
+ "certo5_1": "Isso! Cinco mais um são seis.",
+ "certo5_2": "Isso! Cinco mais dois são sete.",
+ "certo5_3": "Isso! Cinco mais três são oito.",
+ "certo5_4": "Isso! Cinco mais quatro são nove.",
+ "certo5_5": "Isso! Cinco mais cinco são dez.",
+ "conte1_1": "Conte comigo: um... dois!",
+ "conte1_2": "Conte comigo: um... dois, três!",
+ "conte1_3": "Conte comigo: um... dois, três, quatro!",
+ "conte1_4": "Conte comigo: um... dois, três, quatro, cinco!",
+ "conte1_5": "Conte comigo: um... dois, três, quatro, cinco, seis!",
+ "conte2_1": "Conte comigo: um, dois... três!",
+ "conte2_2": "Conte comigo: um, dois... três, quatro!",
+ "conte2_3": "Conte comigo: um, dois... três, quatro, cinco!",
+ "conte2_4": "Conte comigo: um, dois... três, quatro, cinco, seis!",
+ "conte2_5": "Conte comigo: um, dois... três, quatro, cinco, seis, sete!",
+ "conte3_1": "Conte comigo: um, dois, três... quatro!",
+ "conte3_2": "Conte comigo: um, dois, três... quatro, cinco!",
+ "conte3_3": "Conte comigo: um, dois, três... quatro, cinco, seis!",
+ "conte3_4": "Conte comigo: um, dois, três... quatro, cinco, seis, sete!",
+ "conte3_5": "Conte comigo: um, dois, três... quatro, cinco, seis, sete, oito!",
+ "conte4_1": "Conte comigo: um, dois, três, quatro... cinco!",
+ "conte4_2": "Conte comigo: um, dois, três, quatro... cinco, seis!",
+ "conte4_3": "Conte comigo: um, dois, três, quatro... cinco, seis, sete!",
+ "conte4_4": "Conte comigo: um, dois, três, quatro... cinco, seis, sete, oito!",
+ "conte4_5": "Conte comigo: um, dois, três, quatro... cinco, seis, sete, oito, nove!",
+ "conte5_1": "Conte comigo: um, dois, três, quatro, cinco... seis!",
+ "conte5_2": "Conte comigo: um, dois, três, quatro, cinco... seis, sete!",
+ "conte5_3": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito!",
+ "conte5_4": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito, nove!",
+ "conte5_5": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito, nove, dez!",
+ "digite": "Toque num quadradinho e digite o número.",
+ "essaNao": "Essa não. Conte os dedos das duas mãos de novo.",
+ "falta1_2": "Já tem um dedo. Levante dedos na outra mão até juntar dois.",
+ "falta1_3": "Já tem um dedo. Levante dedos na outra mão até juntar três.",
+ "falta1_4": "Já tem um dedo. Levante dedos na outra mão até juntar quatro.",
+ "falta1_5": "Já tem um dedo. Levante dedos na outra mão até juntar cinco.",
+ "falta1_6": "Já tem um dedo. Levante dedos na outra mão até juntar seis.",
+ "falta2_3": "Já tem dois dedos. Levante dedos na outra mão até juntar três.",
+ "falta2_4": "Já tem dois dedos. Levante dedos na outra mão até juntar quatro.",
+ "falta2_5": "Já tem dois dedos. Levante dedos na outra mão até juntar cinco.",
+ "falta2_6": "Já tem dois dedos. Levante dedos na outra mão até juntar seis.",
+ "falta2_7": "Já tem dois dedos. Levante dedos na outra mão até juntar sete.",
+ "falta3_4": "Já tem três dedos. Levante dedos na outra mão até juntar quatro.",
+ "falta3_5": "Já tem três dedos. Levante dedos na outra mão até juntar cinco.",
+ "falta3_6": "Já tem três dedos. Levante dedos na outra mão até juntar seis.",
+ "falta3_7": "Já tem três dedos. Levante dedos na outra mão até juntar sete.",
+ "falta3_8": "Já tem três dedos. Levante dedos na outra mão até juntar oito.",
+ "falta4_5": "Já tem quatro dedos. Levante dedos na outra mão até juntar cinco.",
+ "falta4_6": "Já tem quatro dedos. Levante dedos na outra mão até juntar seis.",
+ "falta4_7": "Já tem quatro dedos. Levante dedos na outra mão até juntar sete.",
+ "falta4_8": "Já tem quatro dedos. Levante dedos na outra mão até juntar oito.",
+ "falta4_9": "Já tem quatro dedos. Levante dedos na outra mão até juntar nove.",
+ "falta5_10": "Já tem cinco dedos. Levante dedos na outra mão até juntar dez.",
+ "falta5_6": "Já tem cinco dedos. Levante dedos na outra mão até juntar seis.",
+ "falta5_7": "Já tem cinco dedos. Levante dedos na outra mão até juntar sete.",
+ "falta5_8": "Já tem cinco dedos. Levante dedos na outra mão até juntar oito.",
+ "falta5_9": "Já tem cinco dedos. Levante dedos na outra mão até juntar nove.",
+ "faltam": "Ainda falta responder nesta página. Olhe os quadradinhos tracejados.",
+ "faltam1": "Falta um dedo.",
+ "faltam2": "Faltam dois dedos.",
+ "faltam3": "Faltam três dedos.",
+ "faltam4": "Faltam quatro dedos.",
+ "faltam5": "Faltam cinco dedos.",
+ "faltam6": "Faltam seis dedos.",
+ "faltam7": "Faltam sete dedos.",
+ "faltam8": "Faltam oito dedos.",
+ "faltam9": "Faltam nove dedos.",
+ "fechou1_2": "Isso! Um mais um são dois.",
+ "fechou1_3": "Isso! Um mais dois são três.",
+ "fechou1_4": "Isso! Um mais três são quatro.",
+ "fechou1_5": "Isso! Um mais quatro são cinco.",
+ "fechou1_6": "Isso! Um mais cinco são seis.",
+ "fechou2_3": "Isso! Dois mais um são três.",
+ "fechou2_4": "Isso! Dois mais dois são quatro.",
+ "fechou2_5": "Isso! Dois mais três são cinco.",
+ "fechou2_6": "Isso! Dois mais quatro são seis.",
+ "fechou2_7": "Isso! Dois mais cinco são sete.",
+ "fechou3_4": "Isso! Três mais um são quatro.",
+ "fechou3_5": "Isso! Três mais dois são cinco.",
+ "fechou3_6": "Isso! Três mais três são seis.",
+ "fechou3_7": "Isso! Três mais quatro são sete.",
+ "fechou3_8": "Isso! Três mais cinco são oito.",
+ "fechou4_5": "Isso! Quatro mais um são cinco.",
+ "fechou4_6": "Isso! Quatro mais dois são seis.",
+ "fechou4_7": "Isso! Quatro mais três são sete.",
+ "fechou4_8": "Isso! Quatro mais quatro são oito.",
+ "fechou4_9": "Isso! Quatro mais cinco são nove.",
+ "fechou5_10": "Isso! Cinco mais cinco são dez.",
+ "fechou5_6": "Isso! Cinco mais um são seis.",
+ "fechou5_7": "Isso! Cinco mais dois são sete.",
+ "fechou5_8": "Isso! Cinco mais três são oito.",
+ "fechou5_9": "Isso! Cinco mais quatro são nove.",
+ "fim": "Você somou tudo com os dedinhos! Parabéns!",
+ "fimRel": "Relatório do professor aberto.",
+ "levanteMais": "Levante mais dedos.",
+ "levantou0": "Você levantou zero dedos.",
+ "levantou1": "Você levantou um dedo.",
+ "levantou10": "Você levantou dez dedos.",
+ "levantou2": "Você levantou dois dedos.",
+ "levantou3": "Você levantou três dedos.",
+ "levantou4": "Você levantou quatro dedos.",
+ "levantou5": "Você levantou cinco dedos.",
+ "levantou6": "Você levantou seis dedos.",
+ "levantou7": "Você levantou sete dedos.",
+ "levantou8": "Você levantou oito dedos.",
+ "levantou9": "Você levantou nove dedos.",
+ "ligue": "Primeiro toque nas mãos, depois no número.",
+ "mostre0": "Mostre nenhum dedo: abaixe todos.",
+ "mostre1": "Mostre um dedo com as mãos.",
+ "mostre10": "Mostre dez dedos com as mãos.",
+ "mostre2": "Mostre dois dedos com as mãos.",
+ "mostre3": "Mostre três dedos com as mãos.",
+ "mostre4": "Mostre quatro dedos com as mãos.",
+ "mostre5": "Mostre cinco dedos com as mãos.",
+ "mostre6": "Mostre seis dedos com as mãos.",
+ "mostre7": "Mostre sete dedos com as mãos.",
+ "mostre8": "Mostre oito dedos com as mãos.",
+ "mostre9": "Mostre nove dedos com as mãos.",
+ "n0": "zero",
+ "n1": "um",
+ "n10": "dez",
+ "n2": "dois",
+ "n3": "três",
+ "n4": "quatro",
+ "n5": "cinco",
+ "n6": "seis",
+ "n7": "sete",
+ "n8": "oito",
+ "n9": "nove",
+ "nomeOk": "Que nome bonito! Agora toque em Começar.",
+ "novaFolha": "Folha nova! Os dedinhos mudaram. Vamos de novo?",
+ "p1enun": "Conte os dedos das duas mãos e digite quantos são ao todo. Toque no quadradinho para escrever.",
+ "p2enun": "Agora as mãos mostram mais dedos. Conte todos, até dez, e digite quanto dá.",
+ "p3enun": "Ligue cada dupla de mãos ao número de dedos. Toque nas mãos e depois no número, ou puxe uma linha.",
+ "p4enun": "Agora é você quem mostra! Toque nos dedos das duas mãos para levantar a quantidade que eu pedir, e depois toque em Pronto.",
+ "p5enun": "Uma mão já mostra alguns dedos. Levante dedos na outra mão até juntar a quantidade que eu pedir, e toque em Pronto.",
+ "paginaPronta": "Página pronta! Vamos para a próxima.",
+ "par1_1": "Um dedo e mais um dedo.",
+ "par1_2": "Um dedo e mais dois dedos.",
+ "par1_3": "Um dedo e mais três dedos.",
+ "par1_4": "Um dedo e mais quatro dedos.",
+ "par1_5": "Um dedo e mais cinco dedos.",
+ "par2_1": "Dois dedos e mais um dedo.",
+ "par2_2": "Dois dedos e mais dois dedos.",
+ "par2_3": "Dois dedos e mais três dedos.",
+ "par2_4": "Dois dedos e mais quatro dedos.",
+ "par2_5": "Dois dedos e mais cinco dedos.",
+ "par3_1": "Três dedos e mais um dedo.",
+ "par3_2": "Três dedos e mais dois dedos.",
+ "par3_3": "Três dedos e mais três dedos.",
+ "par3_4": "Três dedos e mais quatro dedos.",
+ "par3_5": "Três dedos e mais cinco dedos.",
+ "par4_1": "Quatro dedos e mais um dedo.",
+ "par4_2": "Quatro dedos e mais dois dedos.",
+ "par4_3": "Quatro dedos e mais três dedos.",
+ "par4_4": "Quatro dedos e mais quatro dedos.",
+ "par4_5": "Quatro dedos e mais cinco dedos.",
+ "par5_1": "Cinco dedos e mais um dedo.",
+ "par5_2": "Cinco dedos e mais dois dedos.",
+ "par5_3": "Cinco dedos e mais três dedos.",
+ "par5_4": "Cinco dedos e mais quatro dedos.",
+ "par5_5": "Cinco dedos e mais cinco dedos.",
+ "pronto": "Pronto!",
+ "quase": "Quase! Conte de novo, dedo por dedo.",
+ "retomar": "Você estava no meio da folha. Quer continuar de onde parou?",
+ "sobram1": "Sobra um dedo. Abaixe um.",
+ "sobram2": "Sobram dois dedos. Abaixe dois.",
+ "sobram3": "Sobram três dedos. Abaixe três.",
+ "sobram4": "Sobram quatro dedos. Abaixe quatro.",
+ "sobram5": "Sobram cinco dedos. Abaixe cinco.",
+ "sobram6": "Sobram seis dedos. Abaixe seis.",
+ "sobram7": "Sobram sete dedos. Abaixe sete.",
+ "sobram8": "Sobram oito dedos. Abaixe oito.",
+ "sobram9": "Sobram nove dedos. Abaixe nove.",
+ "soma1_1": "Um dedo e mais um dedo. Quantos dedos ao todo?",
+ "soma1_2": "Um dedo e mais dois dedos. Quantos dedos ao todo?",
+ "soma1_3": "Um dedo e mais três dedos. Quantos dedos ao todo?",
+ "soma1_4": "Um dedo e mais quatro dedos. Quantos dedos ao todo?",
+ "soma1_5": "Um dedo e mais cinco dedos. Quantos dedos ao todo?",
+ "soma2_1": "Dois dedos e mais um dedo. Quantos dedos ao todo?",
+ "soma2_2": "Dois dedos e mais dois dedos. Quantos dedos ao todo?",
+ "soma2_3": "Dois dedos e mais três dedos. Quantos dedos ao todo?",
+ "soma2_4": "Dois dedos e mais quatro dedos. Quantos dedos ao todo?",
+ "soma2_5": "Dois dedos e mais cinco dedos. Quantos dedos ao todo?",
+ "soma3_1": "Três dedos e mais um dedo. Quantos dedos ao todo?",
+ "soma3_2": "Três dedos e mais dois dedos. Quantos dedos ao todo?",
+ "soma3_3": "Três dedos e mais três dedos. Quantos dedos ao todo?",
+ "soma3_4": "Três dedos e mais quatro dedos. Quantos dedos ao todo?",
+ "soma3_5": "Três dedos e mais cinco dedos. Quantos dedos ao todo?",
+ "soma4_1": "Quatro dedos e mais um dedo. Quantos dedos ao todo?",
+ "soma4_2": "Quatro dedos e mais dois dedos. Quantos dedos ao todo?",
+ "soma4_3": "Quatro dedos e mais três dedos. Quantos dedos ao todo?",
+ "soma4_4": "Quatro dedos e mais quatro dedos. Quantos dedos ao todo?",
+ "soma4_5": "Quatro dedos e mais cinco dedos. Quantos dedos ao todo?",
+ "soma5_1": "Cinco dedos e mais um dedo. Quantos dedos ao todo?",
+ "soma5_2": "Cinco dedos e mais dois dedos. Quantos dedos ao todo?",
+ "soma5_3": "Cinco dedos e mais três dedos. Quantos dedos ao todo?",
+ "soma5_4": "Cinco dedos e mais quatro dedos. Quantos dedos ao todo?",
+ "soma5_5": "Cinco dedos e mais cinco dedos. Quantos dedos ao todo?",
+ "vozOn": "Narração ligada!"
+};
+/*FALAS-FIM*/
+/*VOZOK-INI*/var VOZOK = {"1boxyza":1,"ovkh7q":1,"1n11lxw":1,"1u9su8l":1,"1b6a7ia":1,"1bg71gr":1,"cms3qb":1,"8v3f9":1,"1e9t0t7":1,"tz23dr":1,"12f783k":1,"59jcst":1,"1tp4h36":1,"1688zhb":1,"ea2di3":1,"1ijj50x":1,"9zd07f":1,"1d3ccvf":1,"732z7k":1,"sdty5t":1,"gzrf8":1,"1d85pkx":1,"1mkv8mb":1,"18boq7h":1,"1tjov6z":1,"1twol8h":1,"1o8yluk":1,"qfqkz6":1,"1kk4n1d":1,"rai5zd":1,"1jrwyqp":1,"1orgwyp":1,"1pzr5y9":1,"1w90b2h":1,"kqa23l":1,"1bf82ld":1,"15m50ym":1,"ulgxft":1,"zy9c9t":1,"6fe5pd":1,"443ntq":1,"15lym79":1,"1ojedsx":1,"1dxof35":1,"1443tcu":1,"clitb9":1,"fbs0x5":1,"4ya8f5":1,"12gi7mm":1,"nx1l0l":1,"1a68yg9":1,"1cvtqig":1,"bysko6":1,"ec88p":1,"14x4nm0":1,"158ko70":1,"n1rvhx":1,"ot39":1,"157i899":1,"hz6loc":1,"1e0da0l":1,"dr13ph":1,"hy45ql":1,"hy4emi":1,"1knu8yx":1,"1n5jgxl":1,"4987wh":1,"498gse":1,"46hvpk":1,"j2nyoi":1,"1vm5hve":1,"1vm5qrb":1,"1vjf5oh":1,"1viuef2":1,"lz3zsp":1,"f646zu":1,"f64fvr":1,"f3dusx":1,"f2t3ji":1,"2x06z4":1,"1xb8dx5":1,"1d7j4h2":1,"1ixjplm":1,"cz5h8z":1,"1kgwgjn":1,"ospt63":1,"utxvhk":1,"19m7y7m":1,"1rqcgq7":1,"x6dlqf":1,"43v2fv":1,"k6bee3":1,"1lhzbgi":1,"1h0kp01":1,"zlgk9x":1,"7b0jxt":1,"d1152d":1,"1h8tl26":1,"n90ofi":1,"1hxbaly":1,"1nyjcxf":1,"3ppdod":1,"lttw6y":1,"1lamdgk":1,"1bajqxt":1,"4x264w":1,"vv0d2c":1,"8bf4c0":1,"1lyi65g":1,"d6jm3h":1,"14549il":1,"q6t60l":1,"1cs1hpu":1,"n2xlx8":1,"1r5asu1":1,"ykws5h":1,"3holj":1,"3775c8":1,"ykg2ac":1,"yksjrc":1,"6n71up":1,"483ab5":1,"ykrdtl":1,"ykre3a":1,"ykoejk":1,"yknrwd":1,"1k3c5r5":1,"immgyh":1,"1hmr0k1":1,"1i4dz0g":1,"15oqy54":1,"2sx2zh":1,"1a4kr7":1,"b6i4x3":1,"1d25cam":1,"xyfmbi":1,"13og7g2":1,"o0i5ez":1,"1ech7a3":1,"1lulo7y":1,"1nd8o4e":1,"1t3998y":1,"1twgbwr":1,"10jr723":1,"2xtaaa":1,"13ty7f6":1,"19jysjq":1,"tlljjz":1,"v56dpr":1,"y1vfaj":1,"15naonf":1,"1bdb9rz":1,"hgx6t4":1,"k0i4aw":1,"1a5blkr":1,"jr7u3f":1,"ph8f7z":1,"18glbig":1,"7x0nq0":1,"1i66t54":1,"2wiznw":1,"1v6fxlw":1,"1nddf7m":1,"1vxohh8":1,"1o7un8":1,"1te3ywm":1,"zm84ae":1,"ipx3vq":1,"1hvfj5s":1,"1m5hgk4":1,"upuzu6":1,"xzgm7x":1,"1qzwczh":1,"1cess35":1,"tu9tu2":1,"fjruka":1,"1ass7x":1,"r6t6ot":1,"clplsh":1,"uw2hm2":1,"15es0d6":1,"1j5t49d":1,"1f0d1g1":1,"10f9gjp":1,"19jju3i":1,"1a5qlla":1,"1io92mi":1,"1xjuf8q":1,"1iyquce":1,"1s4em47":1,"iqnr47":1,"n6j1wa":1,"1u7rji2":1,"1fmnylq":1,"1i9z96v":1,"1eq8rmf":1,"13eqc7p":1};/*VOZOK-FIM*/
+
+/* ---------- A MÃO EM VETOR: n dedos levantados (0-5), lado 'd' ou 'e' ----------
+   Ordem de levantar: indicador, médio, anelar, mínimo, polegar — é como a criança pequena
+   conta. `viva` = cada dedo é um alvo de toque (a peça "mostre com os dedos"). */
+var PELES = ["#f6c9a0", "#c68642", "#8d5524", "#ffdbb4", "#e0ac69"];
+var DEDOS = [[28, 26, 20], [52, 12, 20], [76, 16, 20], [100, 34, 18]];
+function maoSVG(up, lado, pele, viva){
+  /* up = array de 5 booleanos [ind, med, ane, min, pol] */
+  pele = pele || PELES[0]; var sombra = "#d99a6a", borda = "#7a4a2a";
+  var s = '<svg viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+  s += '<g transform="' + (lado === "e" ? "translate(140,0) scale(-1,1)" : "") + '">';
+  s += '<rect x="36" y="140" width="66" height="30" rx="10" fill="#4a90d9" stroke="' + borda + '" stroke-width="3"/>';
+  s += '<path d="M30 95 Q28 150 62 150 L98 150 Q120 150 120 118 L120 92 Q120 84 112 84 L36 84 Q30 84 30 95 Z" fill="' + pele + '" stroke="' + borda + '" stroke-width="3"/>';
+  for(var i = 0; i < 4; i++){
+    var d = DEDOS[i], dq = viva ? ' class="dedo" data-dedo="' + i + '"' : "";
+    if(up[i]){
+      s += '<rect' + dq + ' x="' + d[0] + '" y="' + d[1] + '" width="' + d[2] + '" height="' + (96 - d[1]) + '" rx="10" fill="' + pele + '" stroke="' + borda + '" stroke-width="3"/>';
+      s += '<line x1="' + (d[0] + 4) + '" y1="' + (d[1] + 30) + '" x2="' + (d[0] + d[2] - 4) + '" y2="' + (d[1] + 30) + '" stroke="' + sombra + '" stroke-width="2" pointer-events="none"/>';
+    } else {
+      /* dedo dobrado: cotoco na borda da palma; em modo vivo o alvo e maior (area invisivel por cima) */
+      s += '<rect' + dq + ' x="' + d[0] + '" y="76" width="' + d[2] + '" height="22" rx="9" fill="' + sombra + '" stroke="' + borda + '" stroke-width="3"/>';
+      if(viva) s += '<rect class="dedo" data-dedo="' + i + '" x="' + (d[0] - 2) + '" y="' + (d[1] - 6) + '" width="' + (d[2] + 4) + '" height="' + (104 - d[1]) + '" fill="transparent"/>';
+    }
+  }
+  var pq = viva ? ' class="dedo" data-dedo="4"' : "";
+  if(up[4]) s += '<path' + pq + ' d="M32 100 Q6 96 6 72 Q6 58 16 56 Q26 54 30 68 L34 96 Z" fill="' + pele + '" stroke="' + borda + '" stroke-width="3" stroke-linejoin="round"/>';
+  else {
+    s += '<path' + pq + ' d="M32 104 Q14 104 14 118 Q14 132 32 130 Z" fill="' + sombra + '" stroke="' + borda + '" stroke-width="3" stroke-linejoin="round"/>';
+    if(viva) s += '<rect class="dedo" data-dedo="4" x="2" y="52" width="34" height="84" fill="transparent"/>';
+  }
+  s += '<path d="M36 84 L112 84 Q120 84 120 92 L120 100 L30 100 L30 95 Q30 84 36 84 Z" fill="' + pele + '" pointer-events="none"/>';
+  s += '</g></svg>';
+  return s;
+}
+function upDe(n){ var u = [false, false, false, false, false]; for(var i = 0; i < Math.min(4, n); i++) u[i] = true; if(n >= 5) u[4] = true; return u; }
+function conta(up){ var n = 0; for(var i = 0; i < 5; i++) if(up[i]) n++; return n; }
+function mao(n, lado, pele){ return '<span class="mao" aria-label="' + n + ' dedos">' + maoSVG(upDe(n), lado, pele) + '</span>'; }
+
+/* ---------- sorteio (a folha nunca vem igual) ---------- */
+function rnd(n){ return Math.floor(Math.random() * n); }
+function sorteiaPares(qtd, minT, maxT){
+  /* pares (a,b) com 1..5 cada, total entre minT e maxT, resultados vizinhos DIFERENTES */
+  var out = [], tent = 0, ult = -1;
+  while(out.length < qtd && tent < 500){
+    tent++;
+    var a = 1 + rnd(5), b = 1 + rnd(5), t = a + b;
+    if(t < minT || t > maxT || t === ult) continue;
+    var rep = false; for(var i = 0; i < out.length; i++) if(out[i][0] === a && out[i][1] === b) rep = true;
+    if(rep) continue;
+    out.push([a, b]); ult = t;
+  }
+  return out;
+}
+function sorteiaAlvos(qtd, minT, maxT){ var out = [], ult = -1, tent = 0; while(out.length < qtd && tent < 300){ tent++; var t = minT + rnd(maxT - minT + 1); if(t === ult || out.indexOf(t) > -1) continue; out.push(t); ult = t; } return out; }
+function sorteiaFaltam(qtd){
+  var out = [], tent = 0, ult = -1;
+  while(out.length < qtd && tent < 500){ tent++; var a = 1 + rnd(5), t = a + 1 + rnd(5); if(t > 10 || t === ult) continue; var rep = false; for(var i = 0; i < out.length; i++) if(out[i][0] === a && out[i][1] === t) rep = true; if(rep) continue; out.push([a, t]); ult = t; }
+  return out;
+}
+function novaFolha(){
+  var p3 = sorteiaPares(4, 3, 10), nums = [], i;
+  for(i = 0; i < p3.length; i++) nums.push(p3[i][0] + p3[i][1]);
+  /* garante numeros distintos no ligar */
+  var vist = {}, ok = true; for(i = 0; i < nums.length; i++){ if(vist[nums[i]]) ok = false; vist[nums[i]] = 1; }
+  if(!ok) return novaFolha();
+  return {p1: sorteiaPares(4, 2, 6), p2: sorteiaPares(4, 6, 10), p3: p3, p4: sorteiaAlvos(4, 1, 10), p5: sorteiaFaltam(4), peles: [rnd(5), rnd(5), rnd(5), rnd(5), rnd(5)]};
+}
+
+/* ---------- estado ---------- */
+var ST = {pag: 0, nome: "", folha: novaFolha(), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0};
+var ATIVA = null, vozLigada = true, _narr = null, vozPtBR = null, ultimoBotaoFala = null;
+var CHAVE_LS = "somando_dedinhos";
+var NOMES = ["Some os dedinhos", "Agora até dez", "Ligue ao número", "Mostre com os dedos", "Quantos faltam?"];
+
+/* ---------- som ---------- */
+var _ac = null;
+function ac(){ try{ if(!_ac){ var C = window.AudioContext || window.webkitAudioContext; if(C) _ac = new C(); } if(_ac && _ac.state === "suspended") _ac.resume(); }catch(e){} return _ac; }
+function tom(f, t0, dur, tipo, vol){ var c = ac(); if(!c) return; try{ var o = c.createOscillator(), g = c.createGain(); o.type = tipo || "sine"; o.frequency.value = f; g.gain.setValueAtTime(0.0001, c.currentTime + t0); g.gain.exponentialRampToValueAtTime(vol || .25, c.currentTime + t0 + .02); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t0 + dur); o.connect(g); g.connect(c.destination); o.start(c.currentTime + t0); o.stop(c.currentTime + t0 + dur + .05); }catch(e){} }
+function sPasso(){ tom(660, 0, .07, "triangle", .12); }
+function sTecla(){ tom(880, 0, .05, "square", .06); }
+function sDedo(n){ tom(440 + n * 60, 0, .08, "triangle", .12); }
+function sCerto(){ tom(523, 0, .12); tom(659, .1, .12); tom(784, .2, .2); }
+function sErro(){ tom(180, 0, .18, "triangle", .2); }
+function sFesta(){ var n = [523, 587, 659, 784, 880, 1047]; for(var i = 0; i < n.length; i++) tom(n[i], i * .09, .18); }
+
+/* ---------- voz ---------- */
+function carregaVozes(){ if(!("speechSynthesis" in window)) return; var v = window.speechSynthesis.getVoices(), i; for(i = 0; i < v.length; i++){ if(v[i].lang && v[i].lang.toLowerCase().indexOf("pt-br") > -1){ vozPtBR = v[i]; return; } } for(i = 0; i < v.length; i++){ if(v[i].lang && v[i].lang.toLowerCase().indexOf("pt") > -1){ vozPtBR = v[i]; return; } } }
+if("speechSynthesis" in window){ carregaVozes(); window.speechSynthesis.onvoiceschanged = carregaVozes; }
+function chaveVoz(s){ s = (s || "").replace(/\s+/g, " ").replace(/^ | $/g, "").toLowerCase(); var hh = 5381, i; for(i = 0; i < s.length; i++){ hh = ((hh << 5) + hh + s.charCodeAt(i)) >>> 0; } return hh.toString(36); }
+function falarNavegador(t){ if(!("speechSynthesis" in window)) return; try{ window.speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(t); u.lang = "pt-BR"; if(vozPtBR) u.voice = vozPtBR; u.rate = .95; u.pitch = 1.05; window.speechSynthesis.speak(u); }catch(e){} }
+function calar(){ if("speechSynthesis" in window){ try{ window.speechSynthesis.cancel(); }catch(e){} } if(_narr){ try{ _narr.pause(); }catch(e){} } if(ultimoBotaoFala){ ultimoBotaoFala.className = ultimoBotaoFala.className.replace(" tocando", ""); ultimoBotaoFala = null; } }
+function falar(k, botao, depois){
+  var t = FALAS[k] || k; if(!vozLigada || !t) return;
+  calar();
+  if(botao){ botao.className += " tocando"; ultimoBotaoFala = botao; }
+  var jaFoi = false;
+  var fim = function(){ if(jaFoi) return; jaFoi = true; if(botao && ultimoBotaoFala === botao){ botao.className = botao.className.replace(" tocando", ""); ultimoBotaoFala = null; } if(depois) depois(); };
+  var key = chaveVoz(t);
+  if(VOZOK[key]){
+    if(!_narr){ _narr = new Audio(); _narr.preload = "auto"; }
+    _narr.onended = fim; _narr.onerror = function(){ falarNavegador(t); setTimeout(fim, 2500); };
+    _narr.src = "audio/dd_" + key + ".mp3";
+    try{ _narr.currentTime = 0; }catch(e){}
+    var p = _narr.play(); if(p && p["catch"]) p["catch"](function(){ fim(); });
+    return;
+  }
+  falarNavegador(t); setTimeout(fim, Math.min(9000, 400 + t.length * 65));
+}
+function falarDepois(k, ms){ setTimeout(function(){ falar(k); }, ms || 0); }
+
+/* ---------- utilidades ---------- */
+function el(tag, cls, html){ var e = document.createElement(tag); if(cls) e.className = cls; if(html != null) e.innerHTML = html; return e; }
+function salvar(){ try{ ST.quando = Date.now(); localStorage.setItem(CHAVE_LS, JSON.stringify(ST)); }catch(e){} }
+function carregar(){ try{ var s = localStorage.getItem(CHAVE_LS); if(!s) return null; var o = JSON.parse(s); if(!o || !o.quando || Date.now() - o.quando > 55 * 60 * 1000 || !o.folha) return null; return o; }catch(e){ return null; } }
+function tentativa(id, ok){ if(!ST.tent[id]) ST.tent[id] = {erros: 0, ok: false}; if(ok) ST.tent[id].ok = true; else ST.tent[id].erros++; salvar(); }
+function pele(i){ return PELES[ST.folha.peles[i % 5]]; }
+
+/* ---------- montar ---------- */
+var livro = document.getElementById("livro"), PAGEL = [];
+function monta(){
+  livro.innerHTML = ""; PAGEL = [];
+  var caps = [montaCapa, montaSoma, montaSoma, montaLigar, montaMostrar, montaFaltam];
+  for(var i = 0; i < caps.length; i++){
+    var d = el("div", "pagina" + (i > 0 ? " p" + i : "")); d.setAttribute("data-pag", i);
+    caps[i](d, i);
+    if(i > 0) d.appendChild(el("div", "carimbo", "PÁGINA<br>PRONTA"));
+    livro.appendChild(d); PAGEL.push(d);
+  }
+}
+function faixa(d, i, titulo){ d.appendChild(el("div", "faixa", '<div class="num">' + i + '</div><h2>' + titulo + '</h2>')); }
+function montaCapa(d){
+  var c = el("div", "capa");
+  c.innerHTML = '<h1>Somando com os Dedinhos</h1><div class="sub">Adição até 10 · Pré e 1º ano</div>' +
+    '<div class="cena">' + mao(3, "e", PELES[1]) + '<img src="img/dd_batata.png" alt="Sr. Batata, o mascote">' + mao(2, "d", PELES[0]) + '</div>' +
+    '<div class="nomef vazio" id="nomef">escreva o seu nome ali embaixo</div>';
+  d.appendChild(c);
+}
+function montaSoma(d, pi){
+  var pares = pi === 1 ? ST.folha.p1 : ST.folha.p2;
+  faixa(d, pi, pi === 1 ? "Some os dedinhos" : "Agora até dez");
+  d.appendChild(el("div", "enun", pi === 1 ? "Conte os dedos das duas mãos e <b>digite quantos são</b>." : "Conte todos os dedos, <b>até dez</b>, e digite quanto dá."));
+  for(var i = 0; i < pares.length; i++){
+    var a = pares[i][0], b = pares[i][1];
+    var l = el("div", "linha"); l.innerHTML = '<span class="n">' + (i + 1) + '.</span>' + mao(a, "e", pele(i)) + '<span class="sinal">+</span>' + mao(b, "d", pele(i)) + '<span class="sinal">=</span>';
+    var r = el("div", "resp"); r.setAttribute("role", "button"); r.setAttribute("tabindex", "0"); r.setAttribute("aria-label", "Resposta: toque e digite"); r.setAttribute("data-qa", "resp"); r.id = "r" + pi + "_" + i;
+    var v = ST.resp[r.id]; if(v && v === a + b){ r.textContent = v; r.className = "resp certa"; } else r.innerHTML = '<i class="zi"></i>';
+    r.onclick = (function(r, pi, i){ return function(){ if(r.className.indexOf("certa") > -1) return; sPasso(); ativar(pi, i, r); }; })(r, pi, i);
+    r.onkeydown = function(ev){ if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); this.onclick(); } };
+    l.appendChild(r); d.appendChild(l);
+  }
+}
+function parDe(pi, i){ return (pi === 1 ? ST.folha.p1 : ST.folha.p2)[i]; }
+function ativar(pi, i, e){
+  if(ATIVA && ATIVA.el !== e){ ATIVA.el.className = ATIVA.el.className.replace(" ativa", ""); if(!ATIVA.el.textContent) ATIVA.el.innerHTML = '<i class="zi"></i>'; }
+  ATIVA = {pag: pi, i: i, el: e, val: ""};
+  e.className = "resp ativa"; e.innerHTML = '<span class="v"></span><span class="cursor"></span>';
+  document.getElementById("teclado").className = "aberto";
+  var p = parDe(pi, i); falar("soma" + p[0] + "_" + p[1]);
+}
+function digita(ch){
+  if(!ATIVA){ falar("digite"); return; }
+  sTecla();
+  if(ch === "ap"){ ATIVA.val = ATIVA.val.slice(0, -1); }
+  else if(ch === "ok"){ confere(); return; }
+  else { if(ATIVA.val.length >= 2) return; ATIVA.val += ch; var n = parseInt(ATIVA.val, 10); if(n <= 10) falar("n" + n); }
+  ATIVA.el.querySelector(".v").textContent = ATIVA.val;
+  var p = parDe(ATIVA.pag, ATIVA.i), esperado = String(p[0] + p[1]);
+  if(ATIVA.val.length && ATIVA.val.length >= esperado.length) setTimeout(confere, 420);
+}
+function confere(){
+  if(!ATIVA || !ATIVA.val) return;
+  var A = ATIVA, p = parDe(A.pag, A.i), certo = p[0] + p[1], id = A.el.id, e = A.el;
+  if(parseInt(A.val, 10) === certo){
+    tentativa(id, true); ST.resp[id] = certo; salvar();
+    e.className = "resp certa"; e.textContent = certo;
+    ATIVA = null; document.getElementById("teclado").className = "";
+    sCerto(); falar("certo" + p[0] + "_" + p[1]);
+    setTimeout(function(){ confereFolha(A.pag); }, 900);
+  } else {
+    tentativa(id, false); var n = ST.tent[id].erros;
+    e.className = "resp ativa treme"; sErro();
+    setTimeout(function(){ if(ATIVA === A) e.className = "resp ativa"; }, 500);
+    A.val = ""; e.querySelector(".v").textContent = "";
+    falar(n >= 2 ? "conte" + p[0] + "_" + p[1] : "quase");
+  }
+}
+(function(){
+  var tk = document.getElementById("tk"), ordem = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "ap", "ok"];
+  for(var i = 0; i < ordem.length; i++){
+    var b = el("button", ordem[i] === "ap" ? "ap" : (ordem[i] === "ok" ? "ok" : ""), ordem[i] === "ap" ? "⌫ apagar" : (ordem[i] === "ok" ? "OK" : ordem[i]));
+    b.setAttribute("aria-label", ordem[i] === "ap" ? "Apagar" : (ordem[i] === "ok" ? "Confirmar" : "Número " + ordem[i]));
+    b.onclick = (function(t){ return function(){ digita(t); }; })(ordem[i]); tk.appendChild(b);
+  }
+})();
+document.addEventListener("keydown", function(ev){
+  if(!ATIVA) return;
+  if(document.activeElement && document.activeElement.id === "nomeIn") return;
+  if(ev.key >= "0" && ev.key <= "9"){ ev.preventDefault(); digita(ev.key); }
+  else if(ev.key === "Backspace"){ ev.preventDefault(); digita("ap"); }
+  else if(ev.key === "Enter"){ ev.preventDefault(); digita("ok"); }
+  else if(ev.key === "Escape"){ ATIVA.el.className = "resp"; ATIVA.el.innerHTML = '<i class="zi"></i>'; ATIVA = null; document.getElementById("teclado").className = ""; }
+});
+
+/* ---------- ligar ---------- */
+function montaLigar(d, pi){
+  faixa(d, pi, "Ligue ao número");
+  d.appendChild(el("div", "enun", "Toque nas mãos e depois no <b>número</b> de dedos, ou puxe uma linha."));
+  var pares = ST.folha.p3, box = el("div", "ligar"), ce = el("div", "col"), cd = el("div", "col");
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "linhas");
+  box.appendChild(ce); box.appendChild(cd); box.appendChild(svg); d.appendChild(box);
+  var ordem = [0, 1, 2, 3].sort(function(){ return Math.random() - .5; });
+  var E = {}, D = {}, marcada = null, viva = null, arrastando = false;
+  function centro(e, lado){ var r = e.getBoundingClientRect(), b = box.getBoundingClientRect(); return {x: (lado === "e" ? r.right : r.left) - b.left, y: r.top + r.height / 2 - b.top}; }
+  function linha(a, b, cor, larg, trac){ var l = document.createElementNS("http://www.w3.org/2000/svg", "line"); l.setAttribute("x1", a.x); l.setAttribute("y1", a.y); l.setAttribute("x2", b.x); l.setAttribute("y2", b.y); l.setAttribute("stroke", cor); l.setAttribute("stroke-width", larg || 6); l.setAttribute("stroke-linecap", "round"); if(trac) l.setAttribute("stroke-dasharray", "10 8"); svg.appendChild(l); return l; }
+  function ponto(ev){ var b = box.getBoundingClientRect(); return {x: ev.clientX - b.left, y: ev.clientY - b.top}; }
+  function desmarca(){ if(marcada) marcada.el.className = marcada.el.className.replace(" marcada", ""); marcada = null; if(viva){ svg.removeChild(viva); viva = null; } for(var k in D) D[k].el.className = D[k].el.className.replace(" mostra", ""); }
+  function redesenha(){ while(svg.firstChild) svg.removeChild(svg.firstChild); viva = null; for(var k in E) if(ST.lig["l3_" + k]) linha(centro(E[k].el, "e"), centro(D[k].el, "d"), "#43a047", 7); }
+  function fecha(Re, Rd){
+    var id = "l3_" + Re.k;
+    if(Rd.k === Re.k){
+      tentativa(id, true); ST.lig[id] = 1; salvar();
+      Re.el.className = "ponta maos feita"; Rd.el.className = "ponta numero feita"; desmarca(); redesenha();
+      sCerto(); falar("certo" + Re.a + "_" + Re.b);
+      setTimeout(function(){ confereFolha(pi); }, 900);
+    } else {
+      tentativa(id, false); var n = ST.tent[id].erros;
+      var l = linha(centro(Re.el, "e"), centro(Rd.el, "d"), "#e57373", 6); setTimeout(function(){ if(l.parentNode) svg.removeChild(l); }, 600);
+      Rd.el.className += " treme"; setTimeout(function(){ Rd.el.className = Rd.el.className.replace(" treme", ""); }, 500);
+      sErro(); falar(n >= 2 ? "conte" + Re.a + "_" + Re.b : "essaNao");
+      if(n >= 2 && D[Re.k].el.className.indexOf("feita") < 0) D[Re.k].el.className += " mostra";
+      if(viva){ svg.removeChild(viva); viva = null; }
+    }
+  }
+  for(var i = 0; i < pares.length; i++){ (function(i){
+    var a = pares[i][0], b = pares[i][1], k = "k" + i;
+    var e = el("div", "ponta maos" + (ST.lig["l3_" + k] ? " feita" : "")); e.innerHTML = mao(a, "e", pele(i)) + '<span class="sinal">+</span>' + mao(b, "d", pele(i)); e.setAttribute("role", "button"); e.setAttribute("tabindex", "0"); e.setAttribute("aria-label", FALAS["par" + a + "_" + b] || (a + " e mais " + b)); e.setAttribute("data-qa", "lig-" + k);
+    var R = {k: k, a: a, b: b, el: e}; E[k] = R;
+    e.addEventListener("pointerdown", function(ev){ if(e.className.indexOf("feita") > -1) return; ev.preventDefault(); try{ e.setPointerCapture(ev.pointerId); }catch(x){} desmarca(); marcada = R; e.className += " marcada"; sPasso(); falar("par" + a + "_" + b); arrastando = true; var c = centro(e, "e"); viva = linha(c, c, "#f59e0b", 6, true); });
+    e.addEventListener("pointermove", function(ev){ if(!arrastando || !viva || marcada !== R) return; var p = ponto(ev); viva.setAttribute("x2", p.x); viva.setAttribute("y2", p.y); });
+    e.addEventListener("pointerup", function(ev){ if(!arrastando || marcada !== R) return; arrastando = false; var alvo = null, b2 = box.getBoundingClientRect(); for(var kk in D){ var r = D[kk].el.getBoundingClientRect(); if(ev.clientX >= r.left - 12 && ev.clientX <= r.right + 12 && ev.clientY >= r.top - 8 && ev.clientY <= r.bottom + 8 && D[kk].el.className.indexOf("feita") < 0) alvo = D[kk]; } if(alvo) fecha(R, alvo); else if(viva){ var c = centro(e, "e"); viva.setAttribute("x2", c.x + 30); viva.setAttribute("y2", c.y); } });
+    e.onkeydown = function(ev){ if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); desmarca(); marcada = R; e.className += " marcada"; falar("par" + a + "_" + b); } };
+    ce.appendChild(e);
+  })(i); }
+  for(i = 0; i < ordem.length; i++){ (function(j){
+    var a = pares[j][0], b = pares[j][1], k = "k" + j, t = a + b;
+    var e = el("div", "ponta numero" + (ST.lig["l3_" + k] ? " feita" : ""), String(t)); e.setAttribute("role", "button"); e.setAttribute("tabindex", "0"); e.setAttribute("aria-label", FALAS["n" + t] || String(t)); e.setAttribute("data-qa", "lig-" + k);
+    var R = {k: k, el: e}; D[k] = R;
+    e.addEventListener("pointerdown", function(ev){ if(e.className.indexOf("feita") > -1) return; ev.preventDefault(); if(marcada) fecha(marcada, R); else { sPasso(); falar("n" + t); falarDepois("ligue", 900); } });
+    e.onkeydown = function(ev){ if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); if(marcada) fecha(marcada, R); } };
+    cd.appendChild(e);
+  })(ordem[i]); }
+  d._redesenha = redesenha;
+  window.addEventListener("resize", function(){ if(d.className.indexOf("viva") > -1) redesenha(); });
+}
+
+/* ---------- mostrar com os dedos (producao, nao escolha) ---------- */
+function maosVivas(cont, upE, upD, pi, aoMudar, travaE){
+  /* duas maos grandes; cada dedo alterna ao toque. travaE = a mao esquerda e fixa (quantos faltam) */
+  function render(){
+    cont.innerHTML = '<span class="mao viva" data-lado="e">' + maoSVG(upE, "e", pele(pi), !travaE) + '</span><span class="mao viva" data-lado="d">' + maoSVG(upD, "d", pele(pi + 1), true) + '</span>';
+    var alvos = cont.querySelectorAll(".dedo");
+    for(var i = 0; i < alvos.length; i++){ (function(a){
+      a.addEventListener("pointerdown", function(ev){ ev.preventDefault(); var lado = a.parentNode.parentNode.parentNode.getAttribute("data-lado") || a.closest && a.closest(".mao").getAttribute("data-lado"); var idx = parseInt(a.getAttribute("data-dedo"), 10); var arr = lado === "e" ? upE : upD; arr[idx] = !arr[idx]; sDedo(conta(upE) + conta(upD)); render(); aoMudar(); });
+    })(alvos[i]); }
+  }
+  render();
+  return render;
+}
+function montaMostrar(d, pi){
+  faixa(d, pi, "Mostre com os dedos");
+  d.appendChild(el("div", "enun", "Toque nos dedos para <b>levantar</b> ou abaixar. Mostre a quantidade pedida e toque em <b>Pronto</b>."));
+  var alvos = ST.folha.p4, box = el("div", "mostrar"); d.appendChild(box);
+  var rod = ST.mostra["r" + pi] || 0;
+  function rodada(){
+    if(rod >= alvos.length){ box.innerHTML = '<div class="igual ok">Você mostrou todos!</div>' + bolinhas(); return; }
+    var t = alvos[rod], upE = [false, false, false, false, false], upD = [false, false, false, false, false];
+    box.innerHTML = '<div class="alvo"><span class="txt">Mostre</span><span class="grande">' + t + '</span><span class="txt">dedos</span></div><div class="maos2" id="m2_' + pi + '"></div><div class="contador">Levantados: <b id="cnt_' + pi + '">0</b></div><div style="text-align:center;margin-top:8px"><button class="bt verde" id="pr_' + pi + '" data-qa="pronto">Pronto!</button></div>' + bolinhas();
+    var cnt = box.querySelector("#cnt_" + pi);
+    maosVivas(box.querySelector("#m2_" + pi), upE, upD, pi, function(){ cnt.textContent = conta(upE) + conta(upD); }, false);
+    falar("mostre" + t);
+    box.querySelector("#pr_" + pi).onclick = function(){
+      var n = conta(upE) + conta(upD), id = "m" + pi + "_" + rod;
+      if(n === t){ tentativa(id, true); rod++; ST.mostra["r" + pi] = rod; salvar(); sCerto(); falar("levantou" + n, null, function(){ if(rod >= alvos.length) confereFolha(pi); }); setTimeout(rodada, 1400); if(rod >= alvos.length) setTimeout(function(){ confereFolha(pi); }, 1600); }
+      else { tentativa(id, false); sErro(); var k = Math.abs(t - n); falar("levantou" + n, null, function(){ falar(n < t ? "faltam" + k : "sobram" + k); }); }
+    };
+  }
+  function bolinhas(){ var h = '<div class="rodadas">'; for(var i = 0; i < alvos.length; i++) h += '<i class="' + (i < rod ? "feita" : (i === rod ? "atual" : "")) + '"></i>'; return h + '</div>'; }
+  d._rodada = rodada; rodada();
+}
+function montaFaltam(d, pi){
+  faixa(d, pi, "Quantos faltam?");
+  d.appendChild(el("div", "enun", "Uma mão já mostra dedos. <b>Levante dedos na outra</b> até juntar a quantidade pedida e toque em <b>Pronto</b>."));
+  var itens = ST.folha.p5, box = el("div", "mostrar"); d.appendChild(box);
+  var rod = ST.mostra["r" + pi] || 0;
+  function rodada(){
+    if(rod >= itens.length){ box.innerHTML = '<div class="igual ok">Você completou todas!</div>' + bolinhas(); return; }
+    var a = itens[rod][0], t = itens[rod][1], upE = upDe(a), upD = [false, false, false, false, false];
+    box.innerHTML = '<div class="alvo"><span class="txt">Juntar</span><span class="grande">' + t + '</span><span class="txt">dedos</span></div><div class="maos2" id="m2_' + pi + '"></div><div class="igual" id="ig_' + pi + '">' + a + ' + <span id="b_' + pi + '">?</span> = ' + t + '</div><div style="text-align:center;margin-top:8px"><button class="bt verde" id="pr_' + pi + '" data-qa="pronto">Pronto!</button></div>' + bolinhas();
+    var bEl = box.querySelector("#b_" + pi);
+    maosVivas(box.querySelector("#m2_" + pi), upE, upD, pi, function(){ bEl.textContent = conta(upD); }, true);
+    falar("falta" + a + "_" + t);
+    box.querySelector("#pr_" + pi).onclick = function(){
+      var n = conta(upD), id = "f" + pi + "_" + rod;
+      if(a + n === t){ tentativa(id, true); rod++; ST.mostra["r" + pi] = rod; salvar(); box.querySelector("#ig_" + pi).className = "igual ok"; sCerto(); falar("fechou" + a + "_" + t); setTimeout(rodada, 1600); if(rod >= itens.length) setTimeout(function(){ confereFolha(pi); }, 1800); }
+      else { tentativa(id, false); sErro(); var k = Math.abs(t - a - n); falar("levantou" + (a + n), null, function(){ falar(a + n < t ? "faltam" + k : "sobram" + k); }); }
+    };
+  }
+  function bolinhas(){ var h = '<div class="rodadas">'; for(var i = 0; i < itens.length; i++) h += '<i class="' + (i < rod ? "feita" : (i === rod ? "atual" : "")) + '"></i>'; return h + '</div>'; }
+  d._rodada = rodada; rodada();
+}
+
+/* ---------- pagina pronta / navegacao ---------- */
+function pendentes(pi){
+  var n = 0, i;
+  if(pi === 1 || pi === 2){ var pares = parDe(pi, 0) ? (pi === 1 ? ST.folha.p1 : ST.folha.p2) : []; for(i = 0; i < pares.length; i++) if(ST.resp["r" + pi + "_" + i] !== pares[i][0] + pares[i][1]) n++; }
+  else if(pi === 3){ for(i = 0; i < ST.folha.p3.length; i++) if(!ST.lig["l3_k" + i]) n++; }
+  else if(pi === 4){ n = ST.folha.p4.length - (ST.mostra["r4"] || 0); }
+  else if(pi === 5){ n = ST.folha.p5.length - (ST.mostra["r5"] || 0); }
+  return n;
+}
+function confereFolha(pi){
+  if(pendentes(pi) > 0 || ST.prontas[pi]) return;
+  ST.prontas[pi] = 1; salvar();
+  PAGEL[pi].className += " pronta"; sFesta(); confete(24);
+  if(pi < PAGEL.length - 1){ falar("paginaPronta"); setTimeout(function(){ if(ST.pag === pi) vaiPara(pi + 1); }, 2600); }
+  else { setTimeout(fim, 1400); }
+  atualizaNav();
+}
+function espelhaNome(t){ var n = document.getElementById("nomef"); if(n){ n.textContent = t || "escreva o seu nome ali embaixo"; n.className = t ? "nomef" : "nomef vazio"; } var i = document.getElementById("nomeIn"); if(i && i.value !== t) i.value = t; }
+function vaiPara(pi){
+  calar(); if(ATIVA){ ATIVA.el.className = ATIVA.el.className.indexOf("certa") > -1 ? "resp certa" : "resp"; if(ATIVA.el.className === "resp") ATIVA.el.innerHTML = '<i class="zi"></i>'; ATIVA = null; }
+  document.getElementById("teclado").className = "";
+  document.getElementById("barraCapa").className = pi === 0 ? "aberta" : "";
+  if(pi === 0) espelhaNome(ST.nome || "");
+  document.getElementById("fim").style.display = "none"; document.getElementById("retomar").style.display = "none"; document.getElementById("nav").style.display = pi === 0 ? "none" : "flex"; document.getElementById("nav").style.display = "flex";
+  for(var i = 0; i < PAGEL.length; i++) PAGEL[i].className = PAGEL[i].className.replace(" viva", "");
+  ST.pag = pi; salvar();
+  var d = PAGEL[pi]; d.className += " viva";
+  if(pi > 0) window.scrollTo(0, 0);
+  if(d._redesenha){ setTimeout(d._redesenha, 60); }
+  atualizaNav();
+  if(pi === 0) falarDepois("capa", 300);
+  else falarDepois("p" + pi + "enun", 250);
+}
+function atualizaNav(){
+  var pi = ST.pag, total = PAGEL.length;
+  document.getElementById("pg").textContent = pi === 0 ? "Capa" : "Página " + pi + " de " + (total - 1);
+  var feitas = 0; for(var k in ST.prontas) feitas++;
+  document.getElementById("progI").style.width = (feitas / (total - 1) * 100) + "%";
+  document.getElementById("bAnt").disabled = pi === 0;
+  var prox = document.getElementById("bProx");
+  prox.style.visibility = pi === 0 ? "hidden" : "visible";
+  var pend = pi > 0 ? pendentes(pi) : 0;
+  prox.textContent = pi === total - 1 ? (pend ? "Faltam " + pend : "Ver o resultado ★") : (pend ? "Faltam " + pend + " ▶" : "Próxima ▶");
+  prox.className = pend ? "bt cinza" : "bt verde";
+  document.getElementById("navTxt").textContent = pi === 0 ? "" : NOMES[pi - 1];
+}
+document.getElementById("bAnt").onclick = function(){ sPasso(); if(ST.pag > 0) vaiPara(ST.pag - 1); };
+document.getElementById("bProx").onclick = function(){
+  sPasso(); var pi = ST.pag, pend = pendentes(pi);
+  if(pend){ falar("faltam"); var r = PAGEL[pi].querySelector(".resp:not(.certa), .ponta:not(.feita), .mostrar"); if(r){ r.className += " treme"; setTimeout(function(){ r.className = r.className.replace(" treme", ""); }, 500); try{ r.scrollIntoView({behavior: "smooth", block: "center"}); }catch(e){} } return; }
+  if(pi < PAGEL.length - 1) vaiPara(pi + 1); else fim();
+};
+document.getElementById("bOuvir").onclick = function(){ sPasso(); var b = this; if(document.getElementById("fim").style.display === "block"){ falar("fim", b); return; } if(ST.pag === 0){ falar("capa", b); return; } falar("p" + ST.pag + "enun", b); };
+document.getElementById("bVoz").onclick = function(){ vozLigada = !vozLigada; var b = document.getElementById("bVoz"); if(vozLigada){ b.className = "zap"; falar("vozOn"); } else { calar(); b.className = "zap off"; } };
+document.getElementById("nomeIn").oninput = function(){ ST.nome = this.value.slice(0, 24); espelhaNome(ST.nome); salvar(); };
+document.getElementById("nomeIn").onkeydown = function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); this.blur(); if(ST.nome) falar("nomeOk"); } };
+document.getElementById("bComecar").onclick = function(){ ac(); sPasso(); if(!ST.inicio) ST.inicio = Date.now(); vaiPara(1); };
+
+function confete(n){ var cs = ["#f5b400", "#43a047", "#1d4ed8", "#e53935", "#8e24aa"]; for(var i = 0; i < n; i++){ var c = el("div", "confete"); c.style.left = (Math.random() * 100) + "vw"; c.style.background = cs[i % cs.length]; c.style.animationDelay = (Math.random() * .5) + "s"; document.body.appendChild(c); setTimeout((function(x){ return function(){ if(x.parentNode) x.parentNode.removeChild(x); }; })(c), 2600); } }
+
+/* ---------- fim ---------- */
+var _segura = null;
+function itensDaPagina(pi){ var ids = [], i; if(pi === 1 || pi === 2) for(i = 0; i < 4; i++) ids.push("r" + pi + "_" + i); if(pi === 3) for(i = 0; i < 4; i++) ids.push("l3_k" + i); if(pi === 4) for(i = 0; i < 4; i++) ids.push("m4_" + i); if(pi === 5) for(i = 0; i < 4; i++) ids.push("f5_" + i); return ids; }
+function fim(){
+  calar(); for(var i = 0; i < PAGEL.length; i++) PAGEL[i].className = PAGEL[i].className.replace(" viva", "");
+  document.getElementById("teclado").className = ""; document.getElementById("barraCapa").className = ""; document.getElementById("nav").style.display = "none";
+  var f = document.getElementById("fim"); f.style.display = "block"; window.scrollTo(0, 0);
+  sFesta(); confete(60); falar("fim");
+  var tot = 0, prim = 0, k; for(k in ST.tent){ tot++; if(ST.tent[k].erros === 0) prim++; }
+  var est = document.getElementById("estrelas"); est.innerHTML = "";
+  var n = prim >= tot * .85 ? 3 : (prim >= tot * .6 ? 2 : 1);
+  for(i = 0; i < 3; i++){ var s = el("div", "estrela", '<svg viewBox="0 0 24 24" width="48" height="48"><path d="M12 2l3 6.6 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.2l1.5-7L2 9.4l7-.8z" fill="' + (i < n ? "#f5b400" : "#e6dcc4") + '" stroke="#b98400" stroke-width="1"/></svg>'); est.appendChild(s); setTimeout((function(x){ return function(){ x.className = "estrela acesa"; }; })(s), 300 + i * 350); }
+  var bar = document.getElementById("barras"); bar.innerHTML = "";
+  for(var pi = 1; pi <= 5; pi++){ (function(pi){ var ids = itensDaPagina(pi), t = ids.length, p = 0; for(var j = 0; j < ids.length; j++){ var tt = ST.tent[ids[j]]; if(tt && tt.erros === 0 && tt.ok) p++; } var b = el("div", "barra", "<span>" + NOMES[pi - 1] + "</span><div class='tr'><i></i></div><b>" + p + "/" + t + "</b>"); bar.appendChild(b); setTimeout(function(){ b.querySelector("i").style.width = (t ? p / t * 100 : 0) + "%"; }, 400); })(pi); }
+  document.getElementById("fimTxt").textContent = (ST.nome ? ST.nome + ", você" : "Você") + " acertou de primeira " + prim + " de " + tot + " itens.";
+  document.getElementById("relatorio").style.display = "none";
+}
+(function(){
+  var m = document.getElementById("medalha");
+  function comeca(ev){ ev.preventDefault(); m.className = "medalha segurando"; _segura = setTimeout(function(){ m.className = "medalha"; relatorio(); }, 2000); }
+  function solta(){ m.className = "medalha"; if(_segura){ clearTimeout(_segura); _segura = null; } }
+  m.addEventListener("pointerdown", comeca); m.addEventListener("pointerup", solta); m.addEventListener("pointerleave", solta); m.addEventListener("pointercancel", solta);
+})();
+function relatorio(){
+  var r = document.getElementById("relatorio"), h = "<b>Relatório do professor</b> — " + (ST.nome || "(sem nome)") + " · " + Math.round(((Date.now() - (ST.inicio || Date.now())) / 60000)) + " min<table><tr><th>Item</th><th>Erros antes de acertar</th></tr>";
+  var tot = 0, prim = 0, ruins = [];
+  for(var pi = 1; pi <= 5; pi++){ var ids = itensDaPagina(pi); for(var j = 0; j < ids.length; j++){ var t = ST.tent[ids[j]]; tot++; var e = t ? t.erros : "—"; if(t && t.erros === 0) prim++; var nome = NOMES[pi - 1] + " · item " + (j + 1); if(t && t.erros >= 2) ruins.push(nome); h += "<tr><td>" + nome + "</td><td>" + e + "</td></tr>"; } }
+  var parecer = prim >= tot * .85 ? "Dominou a contagem e a soma até 10 com apoio dos dedos." : (prim >= tot * .6 ? "Está construindo: acerta, mas ainda conta de novo em alguns itens." : "Precisa retomar a contagem um a um com os dedos e material concreto.");
+  h += "</table><p><b>Parecer:</b> " + parecer + (ruins.length ? "<br><b>Itens com 2 ou mais tentativas:</b> " + ruins.join("; ") : "") + "</p><p style='color:#6b4a1a'>Esta folha foi sorteada: as somas mudam a cada abertura.</p>";
+  r.innerHTML = h; r.style.display = "block"; falar("fimRel");
+}
+document.getElementById("bRever").onclick = function(){ sPasso(); vaiPara(1); };
+document.getElementById("bRecomecar").onclick = function(){ sPasso(); try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST = {pag: 0, nome: ST.nome, folha: novaFolha(), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0}; monta(); vaiPara(0); falarDepois("novaFolha", 400); };
+
+/* ---------- retomar ---------- */
+(function(){
+  var salvo = carregar();
+  monta();
+  if(salvo && salvo.pag > 0 && !(salvo.prontas && salvo.prontas[5])){
+    document.getElementById("retomar").style.display = "block";
+    document.getElementById("retTxt").textContent = (salvo.nome ? salvo.nome + ", você" : "Você") + " estava na página " + salvo.pag + ". Quer continuar de onde parou?";
+    document.getElementById("bRetSim").onclick = function(){ ST = salvo; monta(); vaiPara(salvo.pag); };
+    document.getElementById("bRetNao").onclick = function(){ try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST.folha = novaFolha(); monta(); vaiPara(0); };
+    PAGEL[0].className += " viva"; atualizaNav(); falarDepois("retomar", 400);
+  } else { vaiPara(0); }
+  var destrava = function(){ ac(); document.removeEventListener("pointerdown", destrava); document.removeEventListener("keydown", destrava); };
+  document.addEventListener("pointerdown", destrava); document.addEventListener("keydown", destrava);
+})();
+</script>
+</body></html>

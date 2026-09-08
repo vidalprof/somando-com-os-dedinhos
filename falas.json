@@ -1,0 +1,790 @@
+[
+ {
+  "id": "dd_1boxyza",
+  "texto": "Abaixe alguns dedos."
+ },
+ {
+  "id": "dd_ovkh7q",
+  "texto": "Somando com os dedinhos! Escreva o seu nome ali embaixo e toque em Começar."
+ },
+ {
+  "id": "dd_1n11lxw",
+  "texto": "Isso! Um mais um são dois."
+ },
+ {
+  "id": "dd_1u9su8l",
+  "texto": "Isso! Um mais dois são três."
+ },
+ {
+  "id": "dd_1b6a7ia",
+  "texto": "Isso! Um mais três são quatro."
+ },
+ {
+  "id": "dd_1bg71gr",
+  "texto": "Isso! Um mais quatro são cinco."
+ },
+ {
+  "id": "dd_cms3qb",
+  "texto": "Isso! Um mais cinco são seis."
+ },
+ {
+  "id": "dd_8v3f9",
+  "texto": "Isso! Dois mais um são três."
+ },
+ {
+  "id": "dd_1e9t0t7",
+  "texto": "Isso! Dois mais dois são quatro."
+ },
+ {
+  "id": "dd_tz23dr",
+  "texto": "Isso! Dois mais três são cinco."
+ },
+ {
+  "id": "dd_12f783k",
+  "texto": "Isso! Dois mais quatro são seis."
+ },
+ {
+  "id": "dd_59jcst",
+  "texto": "Isso! Dois mais cinco são sete."
+ },
+ {
+  "id": "dd_1tp4h36",
+  "texto": "Isso! Três mais um são quatro."
+ },
+ {
+  "id": "dd_1688zhb",
+  "texto": "Isso! Três mais dois são cinco."
+ },
+ {
+  "id": "dd_ea2di3",
+  "texto": "Isso! Três mais três são seis."
+ },
+ {
+  "id": "dd_1ijj50x",
+  "texto": "Isso! Três mais quatro são sete."
+ },
+ {
+  "id": "dd_9zd07f",
+  "texto": "Isso! Três mais cinco são oito."
+ },
+ {
+  "id": "dd_1d3ccvf",
+  "texto": "Isso! Quatro mais um são cinco."
+ },
+ {
+  "id": "dd_732z7k",
+  "texto": "Isso! Quatro mais dois são seis."
+ },
+ {
+  "id": "dd_sdty5t",
+  "texto": "Isso! Quatro mais três são sete."
+ },
+ {
+  "id": "dd_gzrf8",
+  "texto": "Isso! Quatro mais quatro são oito."
+ },
+ {
+  "id": "dd_1d85pkx",
+  "texto": "Isso! Quatro mais cinco são nove."
+ },
+ {
+  "id": "dd_1mkv8mb",
+  "texto": "Isso! Cinco mais um são seis."
+ },
+ {
+  "id": "dd_18boq7h",
+  "texto": "Isso! Cinco mais dois são sete."
+ },
+ {
+  "id": "dd_1tjov6z",
+  "texto": "Isso! Cinco mais três são oito."
+ },
+ {
+  "id": "dd_1twol8h",
+  "texto": "Isso! Cinco mais quatro são nove."
+ },
+ {
+  "id": "dd_1o8yluk",
+  "texto": "Isso! Cinco mais cinco são dez."
+ },
+ {
+  "id": "dd_qfqkz6",
+  "texto": "Conte comigo: um... dois!"
+ },
+ {
+  "id": "dd_1kk4n1d",
+  "texto": "Conte comigo: um... dois, três!"
+ },
+ {
+  "id": "dd_rai5zd",
+  "texto": "Conte comigo: um... dois, três, quatro!"
+ },
+ {
+  "id": "dd_1jrwyqp",
+  "texto": "Conte comigo: um... dois, três, quatro, cinco!"
+ },
+ {
+  "id": "dd_1orgwyp",
+  "texto": "Conte comigo: um... dois, três, quatro, cinco, seis!"
+ },
+ {
+  "id": "dd_1pzr5y9",
+  "texto": "Conte comigo: um, dois... três!"
+ },
+ {
+  "id": "dd_1w90b2h",
+  "texto": "Conte comigo: um, dois... três, quatro!"
+ },
+ {
+  "id": "dd_kqa23l",
+  "texto": "Conte comigo: um, dois... três, quatro, cinco!"
+ },
+ {
+  "id": "dd_1bf82ld",
+  "texto": "Conte comigo: um, dois... três, quatro, cinco, seis!"
+ },
+ {
+  "id": "dd_15m50ym",
+  "texto": "Conte comigo: um, dois... três, quatro, cinco, seis, sete!"
+ },
+ {
+  "id": "dd_ulgxft",
+  "texto": "Conte comigo: um, dois, três... quatro!"
+ },
+ {
+  "id": "dd_zy9c9t",
+  "texto": "Conte comigo: um, dois, três... quatro, cinco!"
+ },
+ {
+  "id": "dd_6fe5pd",
+  "texto": "Conte comigo: um, dois, três... quatro, cinco, seis!"
+ },
+ {
+  "id": "dd_443ntq",
+  "texto": "Conte comigo: um, dois, três... quatro, cinco, seis, sete!"
+ },
+ {
+  "id": "dd_15lym79",
+  "texto": "Conte comigo: um, dois, três... quatro, cinco, seis, sete, oito!"
+ },
+ {
+  "id": "dd_1ojedsx",
+  "texto": "Conte comigo: um, dois, três, quatro... cinco!"
+ },
+ {
+  "id": "dd_1dxof35",
+  "texto": "Conte comigo: um, dois, três, quatro... cinco, seis!"
+ },
+ {
+  "id": "dd_1443tcu",
+  "texto": "Conte comigo: um, dois, três, quatro... cinco, seis, sete!"
+ },
+ {
+  "id": "dd_clitb9",
+  "texto": "Conte comigo: um, dois, três, quatro... cinco, seis, sete, oito!"
+ },
+ {
+  "id": "dd_fbs0x5",
+  "texto": "Conte comigo: um, dois, três, quatro... cinco, seis, sete, oito, nove!"
+ },
+ {
+  "id": "dd_4ya8f5",
+  "texto": "Conte comigo: um, dois, três, quatro, cinco... seis!"
+ },
+ {
+  "id": "dd_12gi7mm",
+  "texto": "Conte comigo: um, dois, três, quatro, cinco... seis, sete!"
+ },
+ {
+  "id": "dd_nx1l0l",
+  "texto": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito!"
+ },
+ {
+  "id": "dd_1a68yg9",
+  "texto": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito, nove!"
+ },
+ {
+  "id": "dd_1cvtqig",
+  "texto": "Conte comigo: um, dois, três, quatro, cinco... seis, sete, oito, nove, dez!"
+ },
+ {
+  "id": "dd_bysko6",
+  "texto": "Toque num quadradinho e digite o número."
+ },
+ {
+  "id": "dd_ec88p",
+  "texto": "Essa não. Conte os dedos das duas mãos de novo."
+ },
+ {
+  "id": "dd_14x4nm0",
+  "texto": "Já tem um dedo. Levante dedos na outra mão até juntar dois."
+ },
+ {
+  "id": "dd_158ko70",
+  "texto": "Já tem um dedo. Levante dedos na outra mão até juntar três."
+ },
+ {
+  "id": "dd_n1rvhx",
+  "texto": "Já tem um dedo. Levante dedos na outra mão até juntar quatro."
+ },
+ {
+  "id": "dd_ot39",
+  "texto": "Já tem um dedo. Levante dedos na outra mão até juntar cinco."
+ },
+ {
+  "id": "dd_157i899",
+  "texto": "Já tem um dedo. Levante dedos na outra mão até juntar seis."
+ },
+ {
+  "id": "dd_hz6loc",
+  "texto": "Já tem dois dedos. Levante dedos na outra mão até juntar três."
+ },
+ {
+  "id": "dd_1e0da0l",
+  "texto": "Já tem dois dedos. Levante dedos na outra mão até juntar quatro."
+ },
+ {
+  "id": "dd_dr13ph",
+  "texto": "Já tem dois dedos. Levante dedos na outra mão até juntar cinco."
+ },
+ {
+  "id": "dd_hy45ql",
+  "texto": "Já tem dois dedos. Levante dedos na outra mão até juntar seis."
+ },
+ {
+  "id": "dd_hy4emi",
+  "texto": "Já tem dois dedos. Levante dedos na outra mão até juntar sete."
+ },
+ {
+  "id": "dd_1knu8yx",
+  "texto": "Já tem três dedos. Levante dedos na outra mão até juntar quatro."
+ },
+ {
+  "id": "dd_1n5jgxl",
+  "texto": "Já tem três dedos. Levante dedos na outra mão até juntar cinco."
+ },
+ {
+  "id": "dd_4987wh",
+  "texto": "Já tem três dedos. Levante dedos na outra mão até juntar seis."
+ },
+ {
+  "id": "dd_498gse",
+  "texto": "Já tem três dedos. Levante dedos na outra mão até juntar sete."
+ },
+ {
+  "id": "dd_46hvpk",
+  "texto": "Já tem três dedos. Levante dedos na outra mão até juntar oito."
+ },
+ {
+  "id": "dd_j2nyoi",
+  "texto": "Já tem quatro dedos. Levante dedos na outra mão até juntar cinco."
+ },
+ {
+  "id": "dd_1vm5hve",
+  "texto": "Já tem quatro dedos. Levante dedos na outra mão até juntar seis."
+ },
+ {
+  "id": "dd_1vm5qrb",
+  "texto": "Já tem quatro dedos. Levante dedos na outra mão até juntar sete."
+ },
+ {
+  "id": "dd_1vjf5oh",
+  "texto": "Já tem quatro dedos. Levante dedos na outra mão até juntar oito."
+ },
+ {
+  "id": "dd_1viuef2",
+  "texto": "Já tem quatro dedos. Levante dedos na outra mão até juntar nove."
+ },
+ {
+  "id": "dd_lz3zsp",
+  "texto": "Já tem cinco dedos. Levante dedos na outra mão até juntar dez."
+ },
+ {
+  "id": "dd_f646zu",
+  "texto": "Já tem cinco dedos. Levante dedos na outra mão até juntar seis."
+ },
+ {
+  "id": "dd_f64fvr",
+  "texto": "Já tem cinco dedos. Levante dedos na outra mão até juntar sete."
+ },
+ {
+  "id": "dd_f3dusx",
+  "texto": "Já tem cinco dedos. Levante dedos na outra mão até juntar oito."
+ },
+ {
+  "id": "dd_f2t3ji",
+  "texto": "Já tem cinco dedos. Levante dedos na outra mão até juntar nove."
+ },
+ {
+  "id": "dd_2x06z4",
+  "texto": "Ainda falta responder nesta página. Olhe os quadradinhos tracejados."
+ },
+ {
+  "id": "dd_1xb8dx5",
+  "texto": "Falta um dedo."
+ },
+ {
+  "id": "dd_1d7j4h2",
+  "texto": "Faltam dois dedos."
+ },
+ {
+  "id": "dd_1ixjplm",
+  "texto": "Faltam três dedos."
+ },
+ {
+  "id": "dd_cz5h8z",
+  "texto": "Faltam quatro dedos."
+ },
+ {
+  "id": "dd_1kgwgjn",
+  "texto": "Faltam cinco dedos."
+ },
+ {
+  "id": "dd_ospt63",
+  "texto": "Faltam seis dedos."
+ },
+ {
+  "id": "dd_utxvhk",
+  "texto": "Faltam sete dedos."
+ },
+ {
+  "id": "dd_19m7y7m",
+  "texto": "Faltam oito dedos."
+ },
+ {
+  "id": "dd_1rqcgq7",
+  "texto": "Faltam nove dedos."
+ },
+ {
+  "id": "dd_x6dlqf",
+  "texto": "Você somou tudo com os dedinhos! Parabéns!"
+ },
+ {
+  "id": "dd_43v2fv",
+  "texto": "Relatório do professor aberto."
+ },
+ {
+  "id": "dd_k6bee3",
+  "texto": "Levante mais dedos."
+ },
+ {
+  "id": "dd_1lhzbgi",
+  "texto": "Você levantou zero dedos."
+ },
+ {
+  "id": "dd_1h0kp01",
+  "texto": "Você levantou um dedo."
+ },
+ {
+  "id": "dd_zlgk9x",
+  "texto": "Você levantou dez dedos."
+ },
+ {
+  "id": "dd_7b0jxt",
+  "texto": "Você levantou dois dedos."
+ },
+ {
+  "id": "dd_d1152d",
+  "texto": "Você levantou três dedos."
+ },
+ {
+  "id": "dd_1h8tl26",
+  "texto": "Você levantou quatro dedos."
+ },
+ {
+  "id": "dd_n90ofi",
+  "texto": "Você levantou cinco dedos."
+ },
+ {
+  "id": "dd_1hxbaly",
+  "texto": "Você levantou seis dedos."
+ },
+ {
+  "id": "dd_1nyjcxf",
+  "texto": "Você levantou sete dedos."
+ },
+ {
+  "id": "dd_3ppdod",
+  "texto": "Você levantou oito dedos."
+ },
+ {
+  "id": "dd_lttw6y",
+  "texto": "Você levantou nove dedos."
+ },
+ {
+  "id": "dd_1lamdgk",
+  "texto": "Primeiro toque nas mãos, depois no número."
+ },
+ {
+  "id": "dd_1bajqxt",
+  "texto": "Mostre nenhum dedo: abaixe todos."
+ },
+ {
+  "id": "dd_4x264w",
+  "texto": "Mostre um dedo com as mãos."
+ },
+ {
+  "id": "dd_vv0d2c",
+  "texto": "Mostre dez dedos com as mãos."
+ },
+ {
+  "id": "dd_8bf4c0",
+  "texto": "Mostre dois dedos com as mãos."
+ },
+ {
+  "id": "dd_1lyi65g",
+  "texto": "Mostre três dedos com as mãos."
+ },
+ {
+  "id": "dd_d6jm3h",
+  "texto": "Mostre quatro dedos com as mãos."
+ },
+ {
+  "id": "dd_14549il",
+  "texto": "Mostre cinco dedos com as mãos."
+ },
+ {
+  "id": "dd_q6t60l",
+  "texto": "Mostre seis dedos com as mãos."
+ },
+ {
+  "id": "dd_1cs1hpu",
+  "texto": "Mostre sete dedos com as mãos."
+ },
+ {
+  "id": "dd_n2xlx8",
+  "texto": "Mostre oito dedos com as mãos."
+ },
+ {
+  "id": "dd_1r5asu1",
+  "texto": "Mostre nove dedos com as mãos."
+ },
+ {
+  "id": "dd_ykws5h",
+  "texto": "zero"
+ },
+ {
+  "id": "dd_3holj",
+  "texto": "um"
+ },
+ {
+  "id": "dd_3775c8",
+  "texto": "dez"
+ },
+ {
+  "id": "dd_ykg2ac",
+  "texto": "dois"
+ },
+ {
+  "id": "dd_yksjrc",
+  "texto": "três"
+ },
+ {
+  "id": "dd_6n71up",
+  "texto": "quatro"
+ },
+ {
+  "id": "dd_483ab5",
+  "texto": "cinco"
+ },
+ {
+  "id": "dd_ykrdtl",
+  "texto": "seis"
+ },
+ {
+  "id": "dd_ykre3a",
+  "texto": "sete"
+ },
+ {
+  "id": "dd_ykoejk",
+  "texto": "oito"
+ },
+ {
+  "id": "dd_yknrwd",
+  "texto": "nove"
+ },
+ {
+  "id": "dd_1k3c5r5",
+  "texto": "Que nome bonito! Agora toque em Começar."
+ },
+ {
+  "id": "dd_immgyh",
+  "texto": "Folha nova! Os dedinhos mudaram. Vamos de novo?"
+ },
+ {
+  "id": "dd_1hmr0k1",
+  "texto": "Conte os dedos das duas mãos e digite quantos são ao todo. Toque no quadradinho para escrever."
+ },
+ {
+  "id": "dd_1i4dz0g",
+  "texto": "Agora as mãos mostram mais dedos. Conte todos, até dez, e digite quanto dá."
+ },
+ {
+  "id": "dd_15oqy54",
+  "texto": "Ligue cada dupla de mãos ao número de dedos. Toque nas mãos e depois no número, ou puxe uma linha."
+ },
+ {
+  "id": "dd_2sx2zh",
+  "texto": "Agora é você quem mostra! Toque nos dedos das duas mãos para levantar a quantidade que eu pedir, e depois toque em Pronto."
+ },
+ {
+  "id": "dd_1a4kr7",
+  "texto": "Uma mão já mostra alguns dedos. Levante dedos na outra mão até juntar a quantidade que eu pedir, e toque em Pronto."
+ },
+ {
+  "id": "dd_b6i4x3",
+  "texto": "Página pronta! Vamos para a próxima."
+ },
+ {
+  "id": "dd_1d25cam",
+  "texto": "Um dedo e mais um dedo."
+ },
+ {
+  "id": "dd_xyfmbi",
+  "texto": "Um dedo e mais dois dedos."
+ },
+ {
+  "id": "dd_13og7g2",
+  "texto": "Um dedo e mais três dedos."
+ },
+ {
+  "id": "dd_o0i5ez",
+  "texto": "Um dedo e mais quatro dedos."
+ },
+ {
+  "id": "dd_1ech7a3",
+  "texto": "Um dedo e mais cinco dedos."
+ },
+ {
+  "id": "dd_1lulo7y",
+  "texto": "Dois dedos e mais um dedo."
+ },
+ {
+  "id": "dd_1nd8o4e",
+  "texto": "Dois dedos e mais dois dedos."
+ },
+ {
+  "id": "dd_1t3998y",
+  "texto": "Dois dedos e mais três dedos."
+ },
+ {
+  "id": "dd_1twgbwr",
+  "texto": "Dois dedos e mais quatro dedos."
+ },
+ {
+  "id": "dd_10jr723",
+  "texto": "Dois dedos e mais cinco dedos."
+ },
+ {
+  "id": "dd_2xtaaa",
+  "texto": "Três dedos e mais um dedo."
+ },
+ {
+  "id": "dd_13ty7f6",
+  "texto": "Três dedos e mais dois dedos."
+ },
+ {
+  "id": "dd_19jysjq",
+  "texto": "Três dedos e mais três dedos."
+ },
+ {
+  "id": "dd_tlljjz",
+  "texto": "Três dedos e mais quatro dedos."
+ },
+ {
+  "id": "dd_v56dpr",
+  "texto": "Três dedos e mais cinco dedos."
+ },
+ {
+  "id": "dd_y1vfaj",
+  "texto": "Quatro dedos e mais um dedo."
+ },
+ {
+  "id": "dd_15naonf",
+  "texto": "Quatro dedos e mais dois dedos."
+ },
+ {
+  "id": "dd_1bdb9rz",
+  "texto": "Quatro dedos e mais três dedos."
+ },
+ {
+  "id": "dd_hgx6t4",
+  "texto": "Quatro dedos e mais quatro dedos."
+ },
+ {
+  "id": "dd_k0i4aw",
+  "texto": "Quatro dedos e mais cinco dedos."
+ },
+ {
+  "id": "dd_1a5blkr",
+  "texto": "Cinco dedos e mais um dedo."
+ },
+ {
+  "id": "dd_jr7u3f",
+  "texto": "Cinco dedos e mais dois dedos."
+ },
+ {
+  "id": "dd_ph8f7z",
+  "texto": "Cinco dedos e mais três dedos."
+ },
+ {
+  "id": "dd_18glbig",
+  "texto": "Cinco dedos e mais quatro dedos."
+ },
+ {
+  "id": "dd_7x0nq0",
+  "texto": "Cinco dedos e mais cinco dedos."
+ },
+ {
+  "id": "dd_1i66t54",
+  "texto": "Pronto!"
+ },
+ {
+  "id": "dd_2wiznw",
+  "texto": "Quase! Conte de novo, dedo por dedo."
+ },
+ {
+  "id": "dd_1v6fxlw",
+  "texto": "Você estava no meio da folha. Quer continuar de onde parou?"
+ },
+ {
+  "id": "dd_1nddf7m",
+  "texto": "Sobra um dedo. Abaixe um."
+ },
+ {
+  "id": "dd_1vxohh8",
+  "texto": "Sobram dois dedos. Abaixe dois."
+ },
+ {
+  "id": "dd_1o7un8",
+  "texto": "Sobram três dedos. Abaixe três."
+ },
+ {
+  "id": "dd_1te3ywm",
+  "texto": "Sobram quatro dedos. Abaixe quatro."
+ },
+ {
+  "id": "dd_zm84ae",
+  "texto": "Sobram cinco dedos. Abaixe cinco."
+ },
+ {
+  "id": "dd_ipx3vq",
+  "texto": "Sobram seis dedos. Abaixe seis."
+ },
+ {
+  "id": "dd_1hvfj5s",
+  "texto": "Sobram sete dedos. Abaixe sete."
+ },
+ {
+  "id": "dd_1m5hgk4",
+  "texto": "Sobram oito dedos. Abaixe oito."
+ },
+ {
+  "id": "dd_upuzu6",
+  "texto": "Sobram nove dedos. Abaixe nove."
+ },
+ {
+  "id": "dd_xzgm7x",
+  "texto": "Um dedo e mais um dedo. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1qzwczh",
+  "texto": "Um dedo e mais dois dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1cess35",
+  "texto": "Um dedo e mais três dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_tu9tu2",
+  "texto": "Um dedo e mais quatro dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_fjruka",
+  "texto": "Um dedo e mais cinco dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1ass7x",
+  "texto": "Dois dedos e mais um dedo. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_r6t6ot",
+  "texto": "Dois dedos e mais dois dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_clplsh",
+  "texto": "Dois dedos e mais três dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_uw2hm2",
+  "texto": "Dois dedos e mais quatro dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_15es0d6",
+  "texto": "Dois dedos e mais cinco dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1j5t49d",
+  "texto": "Três dedos e mais um dedo. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1f0d1g1",
+  "texto": "Três dedos e mais dois dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_10f9gjp",
+  "texto": "Três dedos e mais três dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_19jju3i",
+  "texto": "Três dedos e mais quatro dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1a5qlla",
+  "texto": "Três dedos e mais cinco dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1io92mi",
+  "texto": "Quatro dedos e mais um dedo. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1xjuf8q",
+  "texto": "Quatro dedos e mais dois dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1iyquce",
+  "texto": "Quatro dedos e mais três dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1s4em47",
+  "texto": "Quatro dedos e mais quatro dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_iqnr47",
+  "texto": "Quatro dedos e mais cinco dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_n6j1wa",
+  "texto": "Cinco dedos e mais um dedo. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1u7rji2",
+  "texto": "Cinco dedos e mais dois dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1fmnylq",
+  "texto": "Cinco dedos e mais três dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1i9z96v",
+  "texto": "Cinco dedos e mais quatro dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_1eq8rmf",
+  "texto": "Cinco dedos e mais cinco dedos. Quantos dedos ao todo?"
+ },
+ {
+  "id": "dd_13eqc7p",
+  "texto": "Narração ligada!"
+ }
+]
