@@ -499,13 +499,60 @@ function sorteiaFaltam(qtd){
   while(out.length < qtd && tent < 500){ tent++; var a = 1 + rnd(5), t = a + 1 + rnd(5); if(t > 10 || t === ult) continue; var rep = false; for(var i = 0; i < out.length; i++) if(out[i][0] === a && out[i][1] === t) rep = true; if(rep) continue; out.push([a, t]); ult = t; }
   return out;
 }
+/*TRABALHO-INI*/
+/* ⚠️ O QUE A CRIANÇA TEM PARA FAZER — declarado, e numa FONTE SÓ.
+   Esta atividade SORTEIA o conteúdo a cada abertura (`novaFolha`), então não
+   existe um pote fixo de itens como nos cadernos de folha viva. O que é fixo é
+   QUANTOS itens cada página pede e QUAL o gesto dela — e é exatamente isso que
+   o portão de duração (`_qa/duracao.py`) precisa saber para dizer quanto tempo
+   a folha enche.
+
+   ⚠️ SEM ISTO O PORTÃO MEDIA A LISTA ERRADA (19/set/2026). Ele não conhecia
+      este formato, caía no galho genérico e pegava as duas maiores listas que
+      achava — `NOMES` (os cinco títulos das páginas) e `PELES` (os três tons de
+      pele). Dizia "8 itens para resolver" numa atividade de 20, e reprovava com
+      esse número. É a QUARTA vez que este portão mede a lista errada, e as três
+      anteriores estão escritas dentro dele. Contar o título da página como
+      trabalho da criança é pior do que não medir: dá um número com cara de
+      medida.
+
+   ⚠️ E O `novaFolha` LÊ DAQUI, não repete o número. Se fossem dois lugares, o
+      portão mediria uma coisa e a criança faria outra — que é o defeito que
+      este projeto inteiro passa o tempo a fechar. Mexeu num, mexeu no outro,
+      porque só há um. */
+var TRABALHO = {
+  "p1": {"n": 10, "gesto": "escrever"},
+  "p2": {"n": 10, "gesto": "escrever"},
+  "p3": {"n": 5, "gesto": "ligar"},
+  "p4": {"n": 8, "gesto": "produzir"},
+  "p5": {"n": 8, "gesto": "produzir"}
+};
+/* ⚠️ OS NÚMEROS ACIMA CRESCERAM EM 19/set/2026, e há teto em cada um — não é
+   folga, é o que o sorteio consegue entregar sem repetir:
+     · p1 (somas de 2 a 6):   15 pares possíveis, e vizinhos não podem ter o
+       mesmo total. 10 cabe; muito mais faz o sorteio desistir e devolver menos.
+     · p2 (somas de 6 a 10):  15 pares possíveis, mesma conta.
+     · p3 (ligar):            os totais têm de ser TODOS DIFERENTES, e só há 8
+       totais entre 3 e 10. Cinco é o que cabe na tela sem apertar o alvo.
+     · p4 (mostrar):          10 alvos distintos (1 a 10). Oito deixa margem.
+     · p5 (quantos faltam):   25 combinações possíveis.
+   ⚠️ E mexer aqui NÃO custa voz nova: o banco já tem as 25 falas de cada
+      família (`par`, `soma`, `conte`, `certo`, `fechou`, `falta`) e os 10
+      alvos. Conferido em 19/set. Crescer sai de graça — foi o que o próprio
+      portão de duração sugeriu como conserto. */
+/*TRABALHO-FIM*/
 function novaFolha(){
-  var p3 = sorteiaPares(4, 3, 10), nums = [], i;
+  var p3 = sorteiaPares(TRABALHO.p3.n, 3, 10), nums = [], i;
   for(i = 0; i < p3.length; i++) nums.push(p3[i][0] + p3[i][1]);
   /* garante numeros distintos no ligar */
   var vist = {}, ok = true; for(i = 0; i < nums.length; i++){ if(vist[nums[i]]) ok = false; vist[nums[i]] = 1; }
   if(!ok) return novaFolha();
-  return {p1: sorteiaPares(4, 2, 6), p2: sorteiaPares(4, 6, 10), p3: p3, p4: sorteiaAlvos(4, 1, 10), p5: sorteiaFaltam(4), peles: [rnd(3), rnd(3), rnd(3), rnd(3), rnd(3)]};
+  return {p1: sorteiaPares(TRABALHO.p1.n, 2, 6),
+          p2: sorteiaPares(TRABALHO.p2.n, 6, 10),
+          p3: p3,
+          p4: sorteiaAlvos(TRABALHO.p4.n, 1, 10),
+          p5: sorteiaFaltam(TRABALHO.p5.n),
+          peles: [rnd(3), rnd(3), rnd(3), rnd(3), rnd(3)]};
 }
 
 /* ---------- estado ---------- */
@@ -650,7 +697,14 @@ function montaLigar(d, pi){
   var pares = ST.folha.p3, box = el("div", "ligar"), ce = el("div", "col"), cd = el("div", "col");
   var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "linhas");
   box.appendChild(ce); box.appendChild(cd); box.appendChild(svg); d.appendChild(box);
-  var ordem = [0, 1, 2, 3].sort(function(){ return Math.random() - .5; });
+  /* ⚠️ A ORDEM SAI DO TAMANHO DO POTE, NUNCA DE UM NÚMERO ESCRITO AQUI.
+     Isto estava `[0, 1, 2, 3]` na mão, e ao crescer a página para cinco pares
+     (19/set/2026) a coluna da ESQUERDA passou a ter cinco mãos e a da DIREITA
+     continuou com quatro números: um par sem para onde ir, e a folha nunca
+     fechava. O mesmo número em dois lugares — o defeito que este projeto passa
+     o tempo a fechar. Agora há um lugar só: `pares.length`. */
+  var ordem = []; for(var oi = 0; oi < pares.length; oi++) ordem.push(oi);
+  ordem.sort(function(){ return Math.random() - .5; });
   var E = {}, D = {}, marcada = null, viva = null, arrastando = false;
   function centro(e, lado){ var r = e.getBoundingClientRect(), b = box.getBoundingClientRect(); return {x: (lado === "e" ? r.right : r.left) - b.left, y: r.top + r.height / 2 - b.top}; }
   function linha(a, b, cor, larg, trac){ var l = document.createElementNS("http://www.w3.org/2000/svg", "line"); l.setAttribute("x1", a.x); l.setAttribute("y1", a.y); l.setAttribute("x2", b.x); l.setAttribute("y2", b.y); l.setAttribute("stroke", cor); l.setAttribute("stroke-width", larg || 6); l.setAttribute("stroke-linecap", "round"); if(trac) l.setAttribute("stroke-dasharray", "10 8"); svg.appendChild(l); return l; }
