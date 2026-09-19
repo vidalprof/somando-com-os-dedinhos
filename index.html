@@ -480,25 +480,68 @@ function mao(n, lado, pele){ return '<span class="mao' + (lado === "e" ? " esq" 
 
 /* ---------- sorteio (a folha nunca vem igual) ---------- */
 function rnd(n){ return Math.floor(Math.random() * n); }
+/* ⭐ REGRA DO MARCOS (19/set/2026): *"nessa atividade sempre variar o resultado
+   final pra não repeti-los na mesma página"*. Ele está certo e a razão é dupla:
+   dez somas em que a resposta é CINCO três vezes cansa, e pior — a criança
+   aprende a repetir o número de cima em vez de contar os dedos.
+
+   ⚠️ ISSO TEM UM TETO, E O TETO É DAS MÃOS. Com dois dedos-de-uma-mão (1 a 5 de
+      cada lado) os totais possíveis vão de 2 a 10: NOVE resultados no mundo
+      inteiro. Uma página de somas com resultados todos diferentes não passa de
+      nove itens, e a faixa dela é menor ainda (a página das somas pequenas vai
+      de 2 a 6: cinco). Pedir mais faria o sorteio devolver menos do que a
+      declaração promete — e página que promete dez e entrega cinco é a mesma
+      família de defeito da coluna do LIGAR que quebrou hoje.
+
+   ⚠️ E POR ISSO O SORTEIO MUDOU DE MÉTODO. Antes ele tentava pares ao acaso até
+      500 vezes e desistia calado; agora ele sorteia os RESULTADOS primeiro (que
+      é o que não pode repetir), embaralha e só então escolhe um par para cada
+      um. Assim a quantidade pedida é SEMPRE entregue quando ela cabe — e quando
+      não cabe, o `confereTrabalho()` grita no console em vez de a página encolher
+      em silêncio. */
+function baralhaN(v){
+  for(var i = v.length - 1; i > 0; i--){ var j = rnd(i + 1), x = v[i]; v[i] = v[j]; v[j] = x; }
+  return v;
+}
+function parDoTotal(t){
+  /* um par (a,b) com a,b de 1 a 5 que soma t — escolhido ao acaso entre os
+     possíveis, para a mesma resposta não vir sempre da mesma conta */
+  var lo = Math.max(1, t - 5), hi = Math.min(5, t - 1);
+  var a = lo + rnd(hi - lo + 1);
+  return [a, t - a];
+}
 function sorteiaPares(qtd, minT, maxT){
-  /* pares (a,b) com 1..5 cada, total entre minT e maxT, resultados vizinhos DIFERENTES */
-  var out = [], tent = 0, ult = -1;
-  while(out.length < qtd && tent < 500){
-    tent++;
-    var a = 1 + rnd(5), b = 1 + rnd(5), t = a + b;
-    if(t < minT || t > maxT || t === ult) continue;
-    var rep = false; for(var i = 0; i < out.length; i++) if(out[i][0] === a && out[i][1] === b) rep = true;
-    if(rep) continue;
-    out.push([a, b]); ult = t;
+  var totais = [], t;
+  for(t = Math.max(2, minT); t <= Math.min(10, maxT); t++) totais.push(t);
+  baralhaN(totais);
+  var out = [];
+  for(var i = 0; i < totais.length && out.length < qtd; i++) out.push(parDoTotal(totais[i]));
+  return out;
+}
+function sorteiaAlvos(qtd, minT, maxT){
+  /* ⚠️ Ele JÁ pedia alvos distintos, mas por tentativa e erro, com 300 tentativas.
+     Pedindo os DEZ alvos de 1 a 10, o acaso quase nunca fecha os dez — ele
+     devolvia oito ou nove e a página encolhia calada. Agora é a mesma receita
+     das somas: a lista inteira, embaralhada, cortada no tamanho pedido. */
+  var todos = [], t;
+  for(t = minT; t <= maxT; t++) todos.push(t);
+  return baralhaN(todos).slice(0, qtd);
+}
+function sorteiaFaltam(qtd){
+  /* ⚠️ MESMA REGRA: o que não pode repetir é o TOTAL pedido (o "juntar N"), e
+     os totais possíveis são 2 a 10 — nove. A mão que já está na mesa (`a`) pode
+     repetir à vontade; ela não é a resposta. */
+  var totais = [], t;
+  for(t = 2; t <= 10; t++) totais.push(t);
+  baralhaN(totais);
+  var out = [];
+  for(var i = 0; i < totais.length && out.length < qtd; i++){
+    var par = parDoTotal(totais[i]);
+    out.push([par[0], totais[i]]);
   }
   return out;
 }
-function sorteiaAlvos(qtd, minT, maxT){ var out = [], ult = -1, tent = 0; while(out.length < qtd && tent < 300){ tent++; var t = minT + rnd(maxT - minT + 1); if(t === ult || out.indexOf(t) > -1) continue; out.push(t); ult = t; } return out; }
-function sorteiaFaltam(qtd){
-  var out = [], tent = 0, ult = -1;
-  while(out.length < qtd && tent < 500){ tent++; var a = 1 + rnd(5), t = a + 1 + rnd(5); if(t > 10 || t === ult) continue; var rep = false; for(var i = 0; i < out.length; i++) if(out[i][0] === a && out[i][1] === t) rep = true; if(rep) continue; out.push([a, t]); ult = t; }
-  return out;
-}
+
 /*TRABALHO-INI*/
 /* ⚠️ O QUE A CRIANÇA TEM PARA FAZER — declarado, e numa FONTE SÓ.
    Esta atividade SORTEIA o conteúdo a cada abertura (`novaFolha`), então não
@@ -521,26 +564,33 @@ function sorteiaFaltam(qtd){
       este projeto inteiro passa o tempo a fechar. Mexeu num, mexeu no outro,
       porque só há um. */
 var TRABALHO = {
-  "p1": {"n": 10, "gesto": "escrever"},
-  "p2": {"n": 10, "gesto": "escrever"},
-  "p3": {"n": 5, "gesto": "ligar"},
-  "p4": {"n": 8, "gesto": "produzir"},
-  "p5": {"n": 8, "gesto": "produzir"}
+  /* `res` diz ONDE está o RESULTADO de cada item, que é o que não pode repetir:
+     "soma" = os dois dedos somados · "alvo" = o próprio número pedido ·
+     "total" = o segundo número do par (o "juntar N"). É o que o
+     `confereTrabalho()` usa para conferir a regra a cada abertura. */
+  "p1": {"n": 5, "gesto": "escrever", "res": "soma"},
+  "p2": {"n": 5, "gesto": "escrever", "res": "soma"},
+  "p3": {"n": 6, "gesto": "ligar", "res": "soma"},
+  "p4": {"n": 10, "gesto": "produzir", "res": "alvo"},
+  "p5": {"n": 9, "gesto": "produzir", "res": "total"}
 };
-/* ⚠️ OS NÚMEROS ACIMA CRESCERAM EM 19/set/2026, e há teto em cada um — não é
-   folga, é o que o sorteio consegue entregar sem repetir:
-     · p1 (somas de 2 a 6):   15 pares possíveis, e vizinhos não podem ter o
-       mesmo total. 10 cabe; muito mais faz o sorteio desistir e devolver menos.
-     · p2 (somas de 6 a 10):  15 pares possíveis, mesma conta.
-     · p3 (ligar):            os totais têm de ser TODOS DIFERENTES, e só há 8
-       totais entre 3 e 10. Cinco é o que cabe na tela sem apertar o alvo.
-     · p4 (mostrar):          10 alvos distintos (1 a 10). Oito deixa margem.
-     · p5 (quantos faltam):   25 combinações possíveis.
-   ⚠️ E mexer aqui NÃO custa voz nova: o banco já tem as 25 falas de cada
-      família (`par`, `soma`, `conte`, `certo`, `fechou`, `falta`) e os 10
-      alvos. Conferido em 19/set. Crescer sai de graça — foi o que o próprio
-      portão de duração sugeriu como conserto. */
-/*TRABALHO-FIM*/
+/* ⚠️ OS NÚMEROS ACIMA SÃO O TETO DAS MÃOS, não uma escolha de tamanho. Com a
+   regra do Marcos de 19/set/2026 — *"sempre variar o resultado final pra não
+   repeti-los na mesma página"* — cada página vale exatamente quantos RESULTADOS
+   diferentes ela consegue ter, e com 1 a 5 dedos de cada lado os totais do
+   mundo são 2 a 10:
+     · p1 (somas de 2 a 6):  os totais 2, 3, 4, 5 e 6      -> 5, e não há sexto
+     · p2 (somas de 6 a 10): os totais 6, 7, 8, 9 e 10     -> 5, e não há sexto
+     · p3 (ligar):           8 totais possíveis (3 a 10), mas seis é o que cabe
+                             na tela sem apertar o alvo abaixo do dedo da criança
+     · p4 (mostrar):         os dez alvos, de 1 a 10       -> 10, a varredura inteira
+     · p5 (quantos faltam):  os totais 2 a 10              -> 9
+   ⚠️ PEDIR MAIS FAZ A PÁGINA ENCOLHER, NÃO CRESCER: o sorteio devolveria menos
+      do que a declaração promete, e a página mostraria menos itens do que o
+      relatório espera. Quem grita se isso acontecer é o `confereTrabalho()` logo
+      abaixo — no console, que é onde o portão `1z boot` escuta.
+   ⚠️ E crescer NÃO custa voz nova: o banco já tem as 25 falas de cada família
+      (`par`, `soma`, `conte`, `certo`, `fechou`, `falta`) e os 10 alvos. */
 function novaFolha(){
   var p3 = sorteiaPares(TRABALHO.p3.n, 3, 10), nums = [], i;
   for(i = 0; i < p3.length; i++) nums.push(p3[i][0] + p3[i][1]);
@@ -555,8 +605,42 @@ function novaFolha(){
           peles: [rnd(3), rnd(3), rnd(3), rnd(3), rnd(3)]};
 }
 
+/* ⚠️ A DECLARAÇÃO E A ENTREGA TÊM DE BATER, E ISSO GRITA EM VEZ DE SUMIR.
+   O `TRABALHO` diz quantos itens cada página pede; o sorteio pode não conseguir
+   entregar (é o que acontece se alguém subir um número acima do teto das mãos).
+   Sem este guarda a página simplesmente mostraria menos itens — calada, com a
+   sintaxe perfeita e nada no console. É a mesma família do LIGAR que ficou com
+   cinco mãos e quatro números hoje.
+   ⚠️ E ELE GRITA NO `console.error` DE PROPÓSITO: o portão `1z boot`
+      (`_qa/boot.js`) reprova a atividade que solta um `console.error` ao abrir.
+      Assim o defeito nunca chega à criança sem passar por um portão. */
+function confereTrabalho(f){
+  for(var k in TRABALHO){
+    if(!TRABALHO.hasOwnProperty(k)) continue;
+    var T = TRABALHO[k], L = f[k] || [];
+    if(L.length !== T.n)
+      console.error("TRABALHO." + k + " pede " + T.n + " item(ns) e o sorteio "
+        + "entregou " + L.length + " — a pagina vai encolher calada. Ver o teto "
+        + "das maos no comentario do TRABALHO.");
+    /* ⭐ A REGRA DO MARCOS (19/set/2026), conferida a cada abertura:
+       *"sempre variar o resultado final pra nao repeti-los na mesma pagina"*.
+       O sorteio ja e feito de um jeito em que repetir e IMPOSSIVEL (ele escolhe
+       os resultados primeiro, embaralha e so entao acha um par para cada um) —
+       mas quem confia so na construcao descobre o defeito quando alguem mexe no
+       sorteio. Aqui a regra e MEDIDA, toda vez, e grita se quebrar. */
+    var vistos = {}, i, r;
+    for(i = 0; i < L.length; i++){
+      r = T.res === "alvo" ? L[i] : (T.res === "total" ? L[i][1] : L[i][0] + L[i][1]);
+      if(vistos[r])
+        console.error("TRABALHO." + k + ": o resultado " + r + " aparece duas vezes "
+          + "na MESMA pagina — a regra e que ele nunca repita (Marcos, 19/set/2026).");
+      vistos[r] = 1;
+    }
+  }
+  return f;
+}
 /* ---------- estado ---------- */
-var ST = {pag: 0, nome: "", folha: novaFolha(), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0};
+var ST = {pag: 0, nome: "", folha: confereTrabalho(novaFolha()), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0};
 var ATIVA = null, vozLigada = true, _narr = null, vozPtBR = null, ultimoBotaoFala = null;
 var CHAVE_LS = "somando_dedinhos";
 var NOMES = ["Some os dedinhos", "Agora até dez", "Ligue ao número", "Mostre com os dedos", "Quantos faltam?"];
@@ -942,7 +1026,7 @@ function relatorio(){
   r.innerHTML = h; r.style.display = "block"; falar("fimRel");
 }
 document.getElementById("bRever").onclick = function(){ sPasso(); vaiPara(1); };
-document.getElementById("bRecomecar").onclick = function(){ sPasso(); try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST = {pag: 0, nome: ST.nome, folha: novaFolha(), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0}; monta(); vaiPara(0); falarDepois("novaFolha", 400); };
+document.getElementById("bRecomecar").onclick = function(){ sPasso(); try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST = {pag: 0, nome: ST.nome, folha: confereTrabalho(novaFolha()), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0}; monta(); vaiPara(0); falarDepois("novaFolha", 400); };
 
 /* ---------- retomar ---------- */
 (function(){
@@ -952,7 +1036,7 @@ document.getElementById("bRecomecar").onclick = function(){ sPasso(); try{ local
     document.getElementById("retomar").style.display = "block";
     document.getElementById("retTxt").textContent = (salvo.nome ? salvo.nome + ", você" : "Você") + " estava na página " + salvo.pag + ". Quer continuar de onde parou?";
     document.getElementById("bRetSim").onclick = function(){ ST = salvo; monta(); vaiPara(salvo.pag); };
-    document.getElementById("bRetNao").onclick = function(){ try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST.folha = novaFolha(); monta(); vaiPara(0); };
+    document.getElementById("bRetNao").onclick = function(){ try{ localStorage.removeItem(CHAVE_LS); }catch(e){} ST.folha = confereTrabalho(novaFolha()); monta(); vaiPara(0); };
     PAGEL[0].className += " viva"; atualizaNav(); falarDepois("retomar", 400);
   } else { vaiPara(0); }
   var destrava = function(){ ac(); document.removeEventListener("pointerdown", destrava); document.removeEventListener("keydown", destrava); };
