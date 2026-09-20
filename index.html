@@ -55,6 +55,13 @@ button{font-family:inherit;cursor:pointer}
 .pagina.p4 .faixa{background:#e65100}.pagina.p4 .faixa .num{color:#e65100}
 .pagina.p5 .faixa{background:#c2185b}.pagina.p5 .faixa .num{color:#c2185b}
 .enun{margin:12px 16px 4px;font-size:clamp(15px,3.6vw,19px);font-weight:700;color:#3a2600;line-height:1.3}
+/* o título de cada família de jeitos, e o número da ponta da conta */
+.jtit{font-weight:900;color:#3a2600;font-size:clamp(15px,4vw,20px);text-align:center;
+  margin:14px 10px 2px;padding:6px 10px;background:#fff4d6;border:2px solid #e8cf90;
+  border-radius:12px}
+.jtit:first-of-type{margin-top:6px}
+.alvoj{font-family:"Comic Sans MS","Chalkboard SE","Segoe Print",cursive;font-weight:900;
+  font-size:clamp(26px,7vw,40px);color:#e65100;flex:none;min-width:34px;text-align:center}
 /* linhas de exercício */
 .linha{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.5vw,12px);margin:8px 10px;padding:10px 6px;border:2px solid #efe6cf;border-radius:14px;background:#fffdf7;flex-wrap:nowrap}
 .linha .n{font-weight:900;color:#a08a5a;font-size:14px;width:22px;flex:none}
@@ -381,6 +388,7 @@ var FALAS = {
  "p3enun": "Ligue cada dupla de mãos ao número de dedos. Toque nas mãos e depois no número, ou puxe uma linha.",
  "p4enun": "Agora é você quem mostra! Toque na mão para levantar um dedo de cada vez, contando em voz alta, até chegar na quantidade que eu pedir. Depois toque em Pronto.",
  "p5enun": "Uma mão já mostra alguns dedos. Levante dedos na outra mão até juntar a quantidade que eu pedir, e toque em Pronto.",
+ "p6enun": "Um número pode ser feito de vários jeitos! Olhe a mão, veja quanto falta para chegar ao número da ponta e digite. Depois repare: quando um lado sobe, o outro desce.",
  "paginaPronta": "Página pronta! Vamos para a próxima.",
  "par1_1": "Um dedo e mais um dedo.",
  "par1_2": "Um dedo e mais dois dedos.",
@@ -447,7 +455,7 @@ var FALAS = {
  "vozOn": "Narração ligada!"
 };
 /*FALAS-FIM*/
-/*VOZOK-INI*/var VOZOK = {"1boxyza":1,"ovkh7q":1,"1n11lxw":1,"1u9su8l":1,"1b6a7ia":1,"1bg71gr":1,"cms3qb":1,"8v3f9":1,"1e9t0t7":1,"tz23dr":1,"12f783k":1,"59jcst":1,"1tp4h36":1,"1688zhb":1,"ea2di3":1,"1ijj50x":1,"9zd07f":1,"1d3ccvf":1,"732z7k":1,"sdty5t":1,"gzrf8":1,"1d85pkx":1,"1mkv8mb":1,"18boq7h":1,"1tjov6z":1,"1twol8h":1,"1o8yluk":1,"qfqkz6":1,"1kk4n1d":1,"rai5zd":1,"1jrwyqp":1,"1orgwyp":1,"1pzr5y9":1,"1w90b2h":1,"kqa23l":1,"1bf82ld":1,"15m50ym":1,"ulgxft":1,"zy9c9t":1,"6fe5pd":1,"443ntq":1,"15lym79":1,"1ojedsx":1,"1dxof35":1,"1443tcu":1,"clitb9":1,"fbs0x5":1,"4ya8f5":1,"12gi7mm":1,"nx1l0l":1,"1a68yg9":1,"1cvtqig":1,"bysko6":1,"ec88p":1,"14x4nm0":1,"158ko70":1,"n1rvhx":1,"ot39":1,"157i899":1,"hz6loc":1,"1e0da0l":1,"dr13ph":1,"hy45ql":1,"hy4emi":1,"1knu8yx":1,"1n5jgxl":1,"4987wh":1,"498gse":1,"46hvpk":1,"j2nyoi":1,"1vm5hve":1,"1vm5qrb":1,"1vjf5oh":1,"1viuef2":1,"lz3zsp":1,"f646zu":1,"f64fvr":1,"f3dusx":1,"f2t3ji":1,"2x06z4":1,"1xb8dx5":1,"1d7j4h2":1,"1ixjplm":1,"cz5h8z":1,"1kgwgjn":1,"ospt63":1,"utxvhk":1,"19m7y7m":1,"1rqcgq7":1,"x6dlqf":1,"43v2fv":1,"k6bee3":1,"1lhzbgi":1,"1h0kp01":1,"zlgk9x":1,"7b0jxt":1,"d1152d":1,"1h8tl26":1,"n90ofi":1,"1hxbaly":1,"1nyjcxf":1,"3ppdod":1,"lttw6y":1,"1lamdgk":1,"1bajqxt":1,"4x264w":1,"vv0d2c":1,"8bf4c0":1,"1lyi65g":1,"d6jm3h":1,"14549il":1,"q6t60l":1,"1cs1hpu":1,"n2xlx8":1,"1r5asu1":1,"ykws5h":1,"3holj":1,"3775c8":1,"ykg2ac":1,"yksjrc":1,"6n71up":1,"483ab5":1,"ykrdtl":1,"ykre3a":1,"ykoejk":1,"yknrwd":1,"1k3c5r5":1,"immgyh":1,"1hmr0k1":1,"1i4dz0g":1,"15oqy54":1,"h18ufi":1,"1a4kr7":1,"b6i4x3":1,"1d25cam":1,"xyfmbi":1,"13og7g2":1,"o0i5ez":1,"1ech7a3":1,"1lulo7y":1,"1nd8o4e":1,"1t3998y":1,"1twgbwr":1,"10jr723":1,"2xtaaa":1,"13ty7f6":1,"19jysjq":1,"tlljjz":1,"v56dpr":1,"y1vfaj":1,"15naonf":1,"1bdb9rz":1,"hgx6t4":1,"k0i4aw":1,"1a5blkr":1,"jr7u3f":1,"ph8f7z":1,"18glbig":1,"7x0nq0":1,"1i66t54":1,"2wiznw":1,"1v6fxlw":1,"1nddf7m":1,"1vxohh8":1,"1o7un8":1,"1te3ywm":1,"zm84ae":1,"ipx3vq":1,"1hvfj5s":1,"1m5hgk4":1,"upuzu6":1,"xzgm7x":1,"1qzwczh":1,"1cess35":1,"tu9tu2":1,"fjruka":1,"1ass7x":1,"r6t6ot":1,"clplsh":1,"uw2hm2":1,"15es0d6":1,"1j5t49d":1,"1f0d1g1":1,"10f9gjp":1,"19jju3i":1,"1a5qlla":1,"1io92mi":1,"1xjuf8q":1,"1iyquce":1,"1s4em47":1,"iqnr47":1,"n6j1wa":1,"1u7rji2":1,"1fmnylq":1,"1i9z96v":1,"1eq8rmf":1,"13eqc7p":1};/*VOZOK-FIM*/
+/*VOZOK-INI*/var VOZOK = {"1boxyza":1,"ovkh7q":1,"1n11lxw":1,"1u9su8l":1,"1b6a7ia":1,"1bg71gr":1,"cms3qb":1,"8v3f9":1,"1e9t0t7":1,"tz23dr":1,"12f783k":1,"59jcst":1,"1tp4h36":1,"1688zhb":1,"ea2di3":1,"1ijj50x":1,"9zd07f":1,"1d3ccvf":1,"732z7k":1,"sdty5t":1,"gzrf8":1,"1d85pkx":1,"1mkv8mb":1,"18boq7h":1,"1tjov6z":1,"1twol8h":1,"1o8yluk":1,"qfqkz6":1,"1kk4n1d":1,"rai5zd":1,"1jrwyqp":1,"1orgwyp":1,"1pzr5y9":1,"1w90b2h":1,"kqa23l":1,"1bf82ld":1,"15m50ym":1,"ulgxft":1,"zy9c9t":1,"6fe5pd":1,"443ntq":1,"15lym79":1,"1ojedsx":1,"1dxof35":1,"1443tcu":1,"clitb9":1,"fbs0x5":1,"4ya8f5":1,"12gi7mm":1,"nx1l0l":1,"1a68yg9":1,"1cvtqig":1,"bysko6":1,"ec88p":1,"14x4nm0":1,"158ko70":1,"n1rvhx":1,"ot39":1,"157i899":1,"hz6loc":1,"1e0da0l":1,"dr13ph":1,"hy45ql":1,"hy4emi":1,"1knu8yx":1,"1n5jgxl":1,"4987wh":1,"498gse":1,"46hvpk":1,"j2nyoi":1,"1vm5hve":1,"1vm5qrb":1,"1vjf5oh":1,"1viuef2":1,"lz3zsp":1,"f646zu":1,"f64fvr":1,"f3dusx":1,"f2t3ji":1,"2x06z4":1,"1xb8dx5":1,"1d7j4h2":1,"1ixjplm":1,"cz5h8z":1,"1kgwgjn":1,"ospt63":1,"utxvhk":1,"19m7y7m":1,"1rqcgq7":1,"x6dlqf":1,"43v2fv":1,"k6bee3":1,"1lhzbgi":1,"1h0kp01":1,"zlgk9x":1,"7b0jxt":1,"d1152d":1,"1h8tl26":1,"n90ofi":1,"1hxbaly":1,"1nyjcxf":1,"3ppdod":1,"lttw6y":1,"1lamdgk":1,"1bajqxt":1,"4x264w":1,"vv0d2c":1,"8bf4c0":1,"1lyi65g":1,"d6jm3h":1,"14549il":1,"q6t60l":1,"1cs1hpu":1,"n2xlx8":1,"1r5asu1":1,"ykws5h":1,"3holj":1,"3775c8":1,"ykg2ac":1,"yksjrc":1,"6n71up":1,"483ab5":1,"ykrdtl":1,"ykre3a":1,"ykoejk":1,"yknrwd":1,"1k3c5r5":1,"immgyh":1,"1hmr0k1":1,"1i4dz0g":1,"15oqy54":1,"h18ufi":1,"1a4kr7":1,"an246o":1,"b6i4x3":1,"1d25cam":1,"xyfmbi":1,"13og7g2":1,"o0i5ez":1,"1ech7a3":1,"1lulo7y":1,"1nd8o4e":1,"1t3998y":1,"1twgbwr":1,"10jr723":1,"2xtaaa":1,"13ty7f6":1,"19jysjq":1,"tlljjz":1,"v56dpr":1,"y1vfaj":1,"15naonf":1,"1bdb9rz":1,"hgx6t4":1,"k0i4aw":1,"1a5blkr":1,"jr7u3f":1,"ph8f7z":1,"18glbig":1,"7x0nq0":1,"1i66t54":1,"2wiznw":1,"1v6fxlw":1,"1nddf7m":1,"1vxohh8":1,"1o7un8":1,"1te3ywm":1,"zm84ae":1,"ipx3vq":1,"1hvfj5s":1,"1m5hgk4":1,"upuzu6":1,"xzgm7x":1,"1qzwczh":1,"1cess35":1,"tu9tu2":1,"fjruka":1,"1ass7x":1,"r6t6ot":1,"clplsh":1,"uw2hm2":1,"15es0d6":1,"1j5t49d":1,"1f0d1g1":1,"10f9gjp":1,"19jju3i":1,"1a5qlla":1,"1io92mi":1,"1xjuf8q":1,"1iyquce":1,"1s4em47":1,"iqnr47":1,"n6j1wa":1,"1u7rji2":1,"1fmnylq":1,"1i9z96v":1,"1eq8rmf":1,"13eqc7p":1};/*VOZOK-FIM*/
 
 /* ---------- A MÃO: FIGURA RECORTADA DA FOLHA DE PAPEL (d11) ----------
    ⭐ Ordem do Marcos (19/set/2026): *"para a atividade de contar nos dedinhos,
@@ -572,7 +580,15 @@ var TRABALHO = {
   "p2": {"n": 5, "gesto": "escrever", "res": "soma"},
   "p3": {"n": 6, "gesto": "ligar", "res": "soma"},
   "p4": {"n": 10, "gesto": "produzir", "res": "alvo"},
-  "p5": {"n": 9, "gesto": "produzir", "res": "total"}
+  "p5": {"n": 9, "gesto": "produzir", "res": "total"},
+  /* ⭐ A PÁGINA DOS JEITOS — e ela é a EXCEÇÃO DECLARADA à regra do resultado.
+     Decisão do Marcos, 20/set/2026, perguntado exatamente sobre isto: nesta
+     página o total PODE repetir na tela, lado a lado, porque a repetição é a
+     descoberta — "o seis dá de vários jeitos". A regra dele continua valendo no
+     que ela protege: o que a criança ESCREVE (a parte que falta) nunca repete
+     dentro do mesmo número, então ela não tem como copiar a resposta de cima.
+     Por isso `res` vem nulo: o guarda confere a QUANTIDADE e não a repetição. */
+  "p6": {"n": 8, "gesto": "escrever", "res": null}
 };
 /* ⚠️ OS NÚMEROS ACIMA SÃO O TETO DAS MÃOS, não uma escolha de tamanho. Com a
    regra do Marcos de 19/set/2026 — *"sempre variar o resultado final pra não
@@ -591,6 +607,37 @@ var TRABALHO = {
       abaixo — no console, que é onde o portão `1z boot` escuta.
    ⚠️ E crescer NÃO custa voz nova: o banco já tem as 25 falas de cada família
       (`par`, `soma`, `conte`, `certo`, `fechou`, `falta`) e os 10 alvos. */
+/* ⭐ TODOS OS JEITOS DE FAZER CADA NÚMERO, com 1 a 5 dedos de cada lado.
+   ⚠️ SÓ ENTRAM 5, 6 E 7 e a razão é aritmética, não gosto: com as duas mãos,
+      o 2 e o 10 têm UM jeito só, o 3 e o 9 têm dois, o 4 e o 8 têm três. Uma
+      página de "vários jeitos" feita com o 9 mostraria dois — não sustenta a
+      descoberta. O 5 e o 7 têm quatro cada, o 6 tem cinco. São esses. */
+var JEITOS = {
+  "5": [[1, 4], [2, 3], [3, 2], [4, 1]],
+  "6": [[1, 5], [2, 4], [3, 3], [4, 2], [5, 1]],
+  "7": [[2, 5], [3, 4], [4, 3], [5, 2]]
+};
+function sorteiaJeitos(qtd){
+  /* dois números diferentes por folha, e de cada um os jeitos que couberem —
+     sempre EMBARALHADOS, para o seis não mostrar sempre os mesmos quatro dos
+     cinco que ele tem. */
+  var alvos = baralhaN(["5", "6", "7"]).slice(0, 2), porAlvo = Math.floor(qtd / 2);
+  var out = [], i, j, todos;
+  for(i = 0; i < alvos.length; i++){
+    /* embaralha para escolher QUAIS jeitos entram (o seis tem cinco e só cabem
+       quatro), e depois ORDENA os escolhidos pela mão que aparece. */
+    todos = baralhaN(JEITOS[alvos[i]].slice(0)).slice(0, porAlvo);
+    /* ⚠️ A ORDEM NÃO É ENFEITE — ela é a descoberta, e a voz PROMETE ela:
+       "repare: quando um lado sobe, o outro desce". Embaralhadas, as linhas
+       mostravam 5, 4, 1, 3 e a frase da narração virava mentira: não havia
+       padrão nenhum para reparar. Em ordem, a mão cresce e a parte que falta
+       diminui, que é a "estratégia de cálculo" que a habilidade do currículo
+       cita no fim. Voz e tela têm de contar a mesma história. */
+    todos.sort(function(x, y){ return x[0] - y[0]; });
+    for(j = 0; j < todos.length; j++) out.push(todos[j]);
+  }
+  return out;
+}
 function novaFolha(){
   var p3 = sorteiaPares(TRABALHO.p3.n, 3, 10), nums = [], i;
   for(i = 0; i < p3.length; i++) nums.push(p3[i][0] + p3[i][1]);
@@ -602,6 +649,7 @@ function novaFolha(){
           p3: p3,
           p4: sorteiaAlvos(TRABALHO.p4.n, 1, 10),
           p5: sorteiaFaltam(TRABALHO.p5.n),
+          p6: sorteiaJeitos(TRABALHO.p6.n),
           peles: [rnd(3), rnd(3), rnd(3), rnd(3), rnd(3)]};
 }
 
@@ -628,6 +676,11 @@ function confereTrabalho(f){
        os resultados primeiro, embaralha e so entao acha um par para cada um) —
        mas quem confia so na construcao descobre o defeito quando alguem mexe no
        sorteio. Aqui a regra e MEDIDA, toda vez, e grita se quebrar. */
+    /* ⚠️ `res` NULO = ESTA PÁGINA NÃO SE MEDE POR AQUI, e é declarado, não
+       esquecido. A página dos jeitos repete o total de propósito (decisão do
+       Marcos, 20/set/2026) — conferir a repetição nela seria o portão brigando
+       com a regra que ele mesmo abriu. */
+    if(!T.res) continue;
     var vistos = {}, i, r;
     for(i = 0; i < L.length; i++){
       r = T.res === "alvo" ? L[i] : (T.res === "total" ? L[i][1] : L[i][0] + L[i][1]);
@@ -643,7 +696,7 @@ function confereTrabalho(f){
 var ST = {pag: 0, nome: "", folha: confereTrabalho(novaFolha()), resp: {}, lig: {}, mostra: {}, tent: {}, prontas: {}, inicio: 0};
 var ATIVA = null, vozLigada = true, _narr = null, vozPtBR = null, ultimoBotaoFala = null;
 var CHAVE_LS = "somando_dedinhos";
-var NOMES = ["Some os dedinhos", "Agora até dez", "Ligue ao número", "Mostre com os dedos", "Quantos faltam?"];
+var NOMES = ["Some os dedinhos", "Agora até dez", "Ligue ao número", "Mostre com os dedos", "Quantos faltam?", "De quantos jeitos dá?"];
 
 /* ---------- som ---------- */
 var _ac = null;
@@ -692,7 +745,7 @@ function pele(i){ return PELES[ST.folha.peles[i % 5] % PELES.length]; }
 var livro = document.getElementById("livro"), PAGEL = [];
 function monta(){
   livro.innerHTML = ""; PAGEL = [];
-  var caps = [montaCapa, montaSoma, montaSoma, montaLigar, montaMostrar, montaFaltam];
+  var caps = [montaCapa, montaSoma, montaSoma, montaLigar, montaMostrar, montaFaltam, montaJeitos];
   for(var i = 0; i < caps.length; i++){
     var d = el("div", "pagina" + (i > 0 ? " p" + i : "")); d.setAttribute("data-pag", i);
     caps[i](d, i);
@@ -722,7 +775,12 @@ function montaSoma(d, pi){
     l.appendChild(r); d.appendChild(l);
   }
 }
-function parDe(pi, i){ return (pi === 1 ? ST.folha.p1 : ST.folha.p2)[i]; }
+function parDe(pi, i){ return (pi === 1 ? ST.folha.p1 : pi === 2 ? ST.folha.p2 : ST.folha.p6)[i]; }
+/* ⚠️ O QUE A CRIANÇA DIGITA NÃO É SEMPRE A SOMA. Nas páginas 1 e 2 ela escreve
+   o TOTAL (4 + 2 = ?); na página 6 o total já está na ponta e ela escreve a
+   PARTE QUE FALTA (4 + ? = 6). Sem esta função o `confere()` compararia com a
+   soma nas três e a página 6 nunca fecharia. */
+function respostaDe(pi, i){ var p = parDe(pi, i); return pi === 6 ? p[1] : p[0] + p[1]; }
 function ativar(pi, i, e){
   if(ATIVA && ATIVA.el !== e){ ATIVA.el.className = ATIVA.el.className.replace(" ativa", ""); if(!ATIVA.el.textContent) ATIVA.el.innerHTML = '<i class="zi"></i>'; }
   ATIVA = {pag: pi, i: i, el: e, val: ""};
@@ -742,7 +800,7 @@ function digita(ch){
 }
 function confere(){
   if(!ATIVA || !ATIVA.val) return;
-  var A = ATIVA, p = parDe(A.pag, A.i), certo = p[0] + p[1], id = A.el.id, e = A.el;
+  var A = ATIVA, p = parDe(A.pag, A.i), certo = respostaDe(A.pag, A.i), id = A.el.id, e = A.el;
   if(parseInt(A.val, 10) === certo){
     tentativa(id, true); ST.resp[id] = certo; salvar();
     e.className = "resp certa"; e.textContent = certo;
@@ -773,6 +831,56 @@ document.addEventListener("keydown", function(ev){
   else if(ev.key === "Enter"){ ev.preventDefault(); digita("ok"); }
   else if(ev.key === "Escape"){ ATIVA.el.className = "resp"; ATIVA.el.innerHTML = '<i class="zi"></i>'; ATIVA = null; document.getElementById("teclado").className = ""; }
 });
+
+/* ---------- 6 — DE QUANTOS JEITOS DÁ? (composição e decomposição) ----------
+   ⭐ A HABILIDADE, copiada verbatim do currículo de Blumenau, 1º ANO, Matemática,
+      objeto "Composição e decomposição de números naturais" (linhas 17675-17681
+      do `_curriculo/blumenau.txt`):
+
+        *"Compor e decompor números de até duas ordens, POR MEIO DE DIFERENTES
+         ADIÇÕES, com o suporte de MATERIAL MANIPULÁVEL, contribuindo para a
+         compreensão de características do sistema de numeração decimal e o
+         desenvolvimento de estratégias de cálculo."*
+
+      As duas partes em maiúsculas são esta página inteira: "diferentes adições"
+      é 6 = 1+5 = 2+4 = 3+3, e o "material manipulável" são os dedos, que já
+      estão na tela desde a primeira página.
+
+   ⭐ E O TOTAL REPETE DE PROPÓSITO — decisão do Marcos, 20/set/2026, perguntado
+      exatamente sobre isto. A regra dele, de véspera, é que o resultado não se
+      repita na mesma página; aqui a repetição É a descoberta ("o seis dá de
+      vários jeitos"), e o que a regra protege continua protegido: a criança
+      escreve a PARTE QUE FALTA, e essa nunca se repete dentro do mesmo número.
+      Ela não tem como copiar a resposta de cima.
+
+   ⚠️ E A PÁGINA É A ÚLTIMA POR DESENHO, não por acaso: ela vem depois do
+      "Quantos faltam?", onde a criança achou UMA parte que falta com os dedos.
+      Aqui ela descobre que havia várias — o mesmo gesto, um degrau acima. */
+function montaJeitos(d, pi){
+  faixa(d, pi, NOMES[pi - 1]);
+  d.appendChild(el("div", "enun", "Um número pode ser feito de <b>vários jeitos</b>! Olhe a mão, veja quanto <b>falta</b> para chegar ao número da ponta e digite."));
+  var lista = ST.folha.p6, ultimo = -1;
+  for(var i = 0; i < lista.length; i++){
+    var a = lista[i][0], b = lista[i][1], alvo = a + b;
+    if(alvo !== ultimo){
+      d.appendChild(el("div", "jtit", "De quantos jeitos dá " + alvo + "?"));
+      ultimo = alvo;
+    }
+    var l = el("div", "linha");
+    l.innerHTML = '<span class="n">' + (i + 1) + '.</span>' + mao(a, "e", pele(i)) + '<span class="sinal">+</span>';
+    var r = el("div", "resp"); r.setAttribute("role", "button"); r.setAttribute("tabindex", "0");
+    r.setAttribute("aria-label", "Quanto falta para " + alvo + "? Toque e digite"); r.setAttribute("data-qa", "resp");
+    r.id = "r" + pi + "_" + i;
+    var v = ST.resp[r.id];
+    if(v && v === b){ r.textContent = v; r.className = "resp certa"; } else r.innerHTML = '<i class="zi"></i>';
+    r.onclick = (function(r, pi, i){ return function(){ if(r.className.indexOf("certa") > -1) return; sPasso(); ativar(pi, i, r); }; })(r, pi, i);
+    r.onkeydown = function(ev){ if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); this.onclick(); } };
+    l.appendChild(r);
+    l.appendChild(el("span", "sinal", "="));
+    l.appendChild(el("span", "alvoj", String(alvo)));
+    d.appendChild(l);
+  }
+}
 
 /* ---------- ligar ---------- */
 function montaLigar(d, pi){
@@ -941,6 +1049,7 @@ function pendentes(pi){
   else if(pi === 3){ for(i = 0; i < ST.folha.p3.length; i++) if(!ST.lig["l3_k" + i]) n++; }
   else if(pi === 4){ n = ST.folha.p4.length - (ST.mostra["r4"] || 0); }
   else if(pi === 5){ n = ST.folha.p5.length - (ST.mostra["r5"] || 0); }
+  else if(pi === 6){ for(i = 0; i < ST.folha.p6.length; i++) if(ST.resp["r6_" + i] !== ST.folha.p6[i][1]) n++; }
   return n;
 }
 function confereFolha(pi){

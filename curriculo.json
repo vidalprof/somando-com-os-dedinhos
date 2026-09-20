@@ -1,0 +1,49 @@
+{
+ "ano": 1,
+ "componente": "Matemática",
+ "rede": "Currículo da Educação Básica do Sistema Municipal de Ensino de Blumenau",
+ "documento": "_curriculo/blumenau.txt",
+ "⚠️ AVISO": "NENHUM PORTÃO MEDE ESTE ARQUIVO. O `_qa/pedagogo_curriculo.py` só alcança caderno de folha viva (index.html + folhas.js) e sai com NÃO MEDI aqui — esta atividade é um app à mão. Então isto é REGISTRO, não verificação: as citações abaixo foram conferidas À MÃO, com o número da linha do documento ao lado de cada uma, para o professor e para a próxima sessão poderem refazer a conferência em um minuto.",
+ "objetivos": [
+  {
+   "objetivo": "Somar duas quantidades mostradas nos dedos, até dez",
+   "paginas": [
+    1,
+    2,
+    3
+   ],
+   "unidade": "Números",
+   "objeto": "Construção de fatos básicos da adição",
+   "habilidade": "HABILIDADE (linha 17670-17672): \"Construir fatos básicos da adição e utilizá-los em procedimentos de cálculo, inclusive de cálculo mental, para resolver problemas.\""
+  },
+  {
+   "objetivo": "Produzir uma quantidade pedida levantando os dedos, e completar até o total",
+   "paginas": [
+    4,
+    5
+   ],
+   "unidade": "Números",
+   "objeto": "Quantificação de elementos de uma coleção",
+   "habilidade": "HABILIDADE (linha 17660-17662): \"Contar a quantidade de objetos de coleções de até 100 unidades e apresentar o resultado por registros verbais e simbólicos, em situações de seu interesse, como jogos, brincadeiras, materiais da sala de aula, entre outros.\""
+  },
+  {
+   "objetivo": "Descobrir que um mesmo número se faz de vários jeitos (6 = 1+5 = 2+4 = 3+3)",
+   "paginas": [
+    6
+   ],
+   "unidade": "Números",
+   "objeto": "Composição e decomposição de números naturais",
+   "habilidade": "HABILIDADE (linha 17675-17681): \"Compor e decompor números de até duas ordens, por meio de diferentes adições, com o suporte de material manipulável, contribuindo para a compreensão de características do sistema de numeração decimal e o desenvolvimento de estratégias de cálculo.\""
+  }
+ ],
+ "conferencia_a_mao": [
+  "Feita em 20/set/2026, depois de o Marcos pedir que a página nova passasse pelo crivo pedagógico.",
+  "O bloco do 1º ANO de Matemática começa na linha 17629 do `_curriculo/blumenau.txt`; as três citações acima estão entre as linhas 17660 e 17681, dentro dele.",
+  "⭐ A terceira é a que justifica a página nova, e ela bate em duas palavras exatas: \"por meio de DIFERENTES ADIÇÕES\" é 6 = 1+5 = 2+4 = 3+3, e \"com o suporte de MATERIAL MANIPULÁVEL\" são os dedos, que já estão na tela desde a página 1.",
+  "⚠️ O que esta atividade NÃO faz, e é honesto dizer: ela fica toda dentro da primeira ordem (números até 10). A habilidade fala em \"até duas ordens\"; a parte das dezenas não está aqui e não deve ser cobrada dela."
+ ],
+ "decisoes_do_professor": [
+  "19/set/2026 — \"nessa atividade sempre variar o resultado final pra não repeti-los na mesma página\". Vale em todas as páginas, e é conferido a cada abertura pelo `confereTrabalho()`.",
+  "20/set/2026 — perguntado se a página dos jeitos podia repetir o total na tela, respondeu que PODE, e junto. Por isso ela é a exceção declarada: ali o total repete de propósito, e o que não repete é a parte que a criança escreve."
+ ]
+}
