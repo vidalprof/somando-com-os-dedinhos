@@ -576,9 +576,9 @@ var TRABALHO = {
      "soma" = os dois dedos somados · "alvo" = o próprio número pedido ·
      "total" = o segundo número do par (o "juntar N"). É o que o
      `confereTrabalho()` usa para conferir a regra a cada abertura. */
-  "p1": {"n": 5, "gesto": "escrever", "res": "soma"},
-  "p2": {"n": 5, "gesto": "escrever", "res": "soma"},
-  "p3": {"n": 6, "gesto": "ligar", "res": "soma"},
+  "p1": {"n": 6, "gesto": "escrever", "res": "soma"},
+  "p2": {"n": 6, "gesto": "escrever", "res": "soma"},
+  "p3": {"n": 7, "gesto": "ligar", "res": "soma"},
   "p4": {"n": 10, "gesto": "produzir", "res": "alvo"},
   "p5": {"n": 9, "gesto": "produzir", "res": "total"},
   /* ⭐ A PÁGINA DOS JEITOS — e ela é a EXCEÇÃO DECLARADA à regra do resultado.
@@ -588,19 +588,31 @@ var TRABALHO = {
      que ela protege: o que a criança ESCREVE (a parte que falta) nunca repete
      dentro do mesmo número, então ela não tem como copiar a resposta de cima.
      Por isso `res` vem nulo: o guarda confere a QUANTIDADE e não a repetição. */
-  "p6": {"n": 8, "gesto": "escrever", "res": null}
+  "p6": {"n": 13, "gesto": "escrever", "res": null}
 };
 /* ⚠️ OS NÚMEROS ACIMA SÃO O TETO DAS MÃOS, não uma escolha de tamanho. Com a
    regra do Marcos de 19/set/2026 — *"sempre variar o resultado final pra não
    repeti-los na mesma página"* — cada página vale exatamente quantos RESULTADOS
    diferentes ela consegue ter, e com 1 a 5 dedos de cada lado os totais do
    mundo são 2 a 10:
-     · p1 (somas de 2 a 6):  os totais 2, 3, 4, 5 e 6      -> 5, e não há sexto
-     · p2 (somas de 6 a 10): os totais 6, 7, 8, 9 e 10     -> 5, e não há sexto
-     · p3 (ligar):           8 totais possíveis (3 a 10), mas seis é o que cabe
-                             na tela sem apertar o alvo abaixo do dedo da criança
+     · p1 (somas de 2 a 7):  os totais 2, 3, 4, 5, 6 e 7   -> 6, e não há sétimo
+     · p2 (somas de 5 a 10): os totais 5, 6, 7, 8, 9 e 10  -> 6, e não há sétimo
+     · p3 (ligar):           8 totais possíveis (3 a 10); sete é o que cabe na
+                             tela sem apertar o alvo abaixo do dedo da criança
      · p4 (mostrar):         os dez alvos, de 1 a 10       -> 10, a varredura inteira
      · p5 (quantos faltam):  os totais 2 a 10              -> 9
+     · p6 (jeitos):          TODOS os jeitos do 5, do 6 e do 7 -> 4 + 5 + 4 = 13
+
+   ⚠️ AS FAIXAS DE p1 E p2 SE TOCAM EM 5, 6 E 7, DE PROPÓSITO (20/set/2026,
+      pedido do Marcos: *"talvez pode aumentar um pouco as contas se for
+      adequado"*). Cada página vale no máximo quantos resultados diferentes ela
+      consegue ter, e nove totais não se partem em duas fatias de seis sem se
+      sobreporem. Sobrepor não custa nada à criança: as duas páginas sorteiam
+      EMBARALHADO e ficam em telas separadas; o título de cada uma continua
+      verdadeiro ("até dez" é teto, não piso) e a p2 continua sendo a única que
+      chega ao 8, ao 9 e ao 10. O que NÃO se pode fazer é ordenar os totais
+      dentro da página para caberem mais: em ordem, a criança lê a escada
+      (2, 3, 4, 5...) e escreve a resposta seguinte sem contar dedo nenhum.
    ⚠️ PEDIR MAIS FAZ A PÁGINA ENCOLHER, NÃO CRESCER: o sorteio devolveria menos
       do que a declaração promete, e a página mostraria menos itens do que o
       relatório espera. Quem grita se isso acontecer é o `confereTrabalho()` logo
@@ -617,22 +629,30 @@ var JEITOS = {
   "6": [[1, 5], [2, 4], [3, 3], [4, 2], [5, 1]],
   "7": [[2, 5], [3, 4], [4, 3], [5, 2]]
 };
-function sorteiaJeitos(qtd){
-  /* dois números diferentes por folha, e de cada um os jeitos que couberem —
-     sempre EMBARALHADOS, para o seis não mostrar sempre os mesmos quatro dos
-     cinco que ele tem. */
-  var alvos = baralhaN(["5", "6", "7"]).slice(0, 2), porAlvo = Math.floor(qtd / 2);
-  var out = [], i, j, todos;
+function sorteiaJeitos(){
+  /* ⭐ OS TRÊS NÚMEROS, E DE CADA UM **TODOS** OS SEUS JEITOS (20/set/2026).
+     Antes eram dois números sorteados e um PEDAÇO dos jeitos de cada um —
+     quatro linhas por bloco, embaralhando QUAIS entravam. Isso tinha dois
+     defeitos, e os dois estavam no ar:
+       1. o bloco perguntava "de quantos jeitos dá 6?" e mostrava QUATRO. O 6
+          tem CINCO (1+5, 2+4, 3+3, 4+2, 5+1). A criança que respondesse à
+          pergunta do título responderia errado — numa página cuja habilidade
+          é justamente compor e decompor "por meio de diferentes adições".
+       2. tirar um jeito ao acaso ABRIA UM BURACO NO PADRÃO que a narração
+          promete ("quando um lado sobe, o outro desce"): sem o 3+3, a escada
+          do 6 saltava de 2+4 para 4+2 e a simetria que ela pede para reparar
+          deixava de existir.
+     Mostrando tudo, o título passa a ser verdade, a escada fica inteira e a
+     decomposição fica COMPLETA, que é o conteúdo. O preço declarado: esta
+     página deixa de variar entre uma abertura e outra (as outras cinco
+     continuam sorteadas). É um preço que vale a pena — aqui a completude É a
+     descoberta, e é ela que o currículo cita.
+     ⚠️ A ORDEM DOS JEITOS NÃO É ENFEITE: cresce pela mão que aparece, porque
+        é assim que a voz promete o padrão. E os três números vêm do menor para
+        o maior, que é o degrau da página. */
+  var alvos = ["5", "6", "7"], out = [], i, j, todos;
   for(i = 0; i < alvos.length; i++){
-    /* embaralha para escolher QUAIS jeitos entram (o seis tem cinco e só cabem
-       quatro), e depois ORDENA os escolhidos pela mão que aparece. */
-    todos = baralhaN(JEITOS[alvos[i]].slice(0)).slice(0, porAlvo);
-    /* ⚠️ A ORDEM NÃO É ENFEITE — ela é a descoberta, e a voz PROMETE ela:
-       "repare: quando um lado sobe, o outro desce". Embaralhadas, as linhas
-       mostravam 5, 4, 1, 3 e a frase da narração virava mentira: não havia
-       padrão nenhum para reparar. Em ordem, a mão cresce e a parte que falta
-       diminui, que é a "estratégia de cálculo" que a habilidade do currículo
-       cita no fim. Voz e tela têm de contar a mesma história. */
+    todos = JEITOS[alvos[i]].slice(0);
     todos.sort(function(x, y){ return x[0] - y[0]; });
     for(j = 0; j < todos.length; j++) out.push(todos[j]);
   }
@@ -644,12 +664,16 @@ function novaFolha(){
   /* garante numeros distintos no ligar */
   var vist = {}, ok = true; for(i = 0; i < nums.length; i++){ if(vist[nums[i]]) ok = false; vist[nums[i]] = 1; }
   if(!ok) return novaFolha();
-  return {p1: sorteiaPares(TRABALHO.p1.n, 2, 6),
-          p2: sorteiaPares(TRABALHO.p2.n, 6, 10),
+  return {p1: sorteiaPares(TRABALHO.p1.n, 2, 7),
+          p2: sorteiaPares(TRABALHO.p2.n, 5, 10),
           p3: p3,
           p4: sorteiaAlvos(TRABALHO.p4.n, 1, 10),
           p5: sorteiaFaltam(TRABALHO.p5.n),
-          p6: sorteiaJeitos(TRABALHO.p6.n),
+          /* ⚠️ sem argumento DE PROPÓSITO: quem manda no tamanho desta página
+             é a aritmética (todos os jeitos do 5, do 6 e do 7), não um número
+             escolhido. O `TRABALHO.p6.n` declara o que isso dá — 13 — e o
+             `confereTrabalho()` grita se um dia os dois discordarem. */
+          p6: sorteiaJeitos(),
           peles: [rnd(3), rnd(3), rnd(3), rnd(3), rnd(3)]};
 }
 
@@ -795,7 +819,13 @@ function digita(ch){
   else if(ch === "ok"){ confere(); return; }
   else { if(ATIVA.val.length >= 2) return; ATIVA.val += ch; var n = parseInt(ATIVA.val, 10); if(n <= 10) falar("n" + n); }
   ATIVA.el.querySelector(".v").textContent = ATIVA.val;
-  var p = parDe(ATIVA.pag, ATIVA.i), esperado = String(p[0] + p[1]);
+  /* ⚠️ O ESPERADO SAI DO `respostaDe`, NÃO DA SOMA. Isto dizia `p[0] + p[1]`,
+     que é a soma — e na página 6 a criança escreve a PARTE QUE FALTA. Hoje as
+     duas têm um dígito (o alvo vai até 7, a parte até 5), então o confere
+     automático acertava por sorte; no dia em que a página crescer para alvos
+     de dois dígitos, ele deixaria de disparar e a criança ficaria esperando.
+     Há uma função só que sabe qual é a resposta de cada página: esta. */
+  var esperado = String(respostaDe(ATIVA.pag, ATIVA.i));
   if(ATIVA.val.length && ATIVA.val.length >= esperado.length) setTimeout(confere, 420);
 }
 function confere(){
