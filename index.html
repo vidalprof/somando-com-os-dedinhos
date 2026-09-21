@@ -2,7 +2,7 @@
 <html lang="pt-BR"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Somando com os Dedinhos</title>
+<title>Aprendendo a somar até dez com os dedos</title>
 <meta name="description" content="Folha autoral de adição até 10 com os dedos das mãos (Pré e 1º ano): contar, digitar, ligar e mostrar com os dedos, com voz em tudo e somas sorteadas a cada abertura.">
 <!-- ============================================================
      SOMANDO COM OS DEDINHOS — a 1ª FOLHA AUTORAL (8/set/2026)
@@ -191,7 +191,7 @@ svg.linhas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:
 <header id="topo">
   <button class="zap ouvir" id="bOuvir" aria-label="Ouvir o que a página pede" title="Ouvir a página"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v3H4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v-8a5 5 0 0 1 10 0v8h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-1V9a7 7 0 0 0-7-7z"/></svg></button>
   <button class="zap" id="bVoz" aria-label="Ligar ou desligar a narração" title="Narração"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button>
-  <div class="tit">Somando com os Dedinhos</div>
+  <div class="tit">Aprendendo a somar até dez com os dedos</div>
   <div class="prog" aria-hidden="true"><i id="progI"></i></div>
   <div class="pg" id="pg">Capa</div>
 </header>
@@ -231,7 +231,7 @@ svg.linhas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:
 /*FALAS-INI*/
 var FALAS = {
  "abaixeUns": "Abaixe alguns dedos.",
- "capa": "Somando com os dedinhos! Escreva o seu nome ali embaixo e toque em Começar.",
+ "capa": "Aprendendo a somar até dez com os dedos. Escreva o seu nome ali embaixo e toque em Começar.",
  "certo1_1": "Isso! Um mais um são dois.",
  "certo1_2": "Isso! Um mais dois são três.",
  "certo1_3": "Isso! Um mais três são quatro.",
@@ -780,7 +780,7 @@ function monta(){
 function faixa(d, i, titulo){ d.appendChild(el("div", "faixa", '<div class="num">' + i + '</div><h2>' + titulo + '</h2>')); }
 function montaCapa(d){
   var c = el("div", "capa");
-  c.innerHTML = '<h1>Somando com os Dedinhos</h1><div class="sub">Adição até 10 · Pré e 1º ano</div>' +
+  c.innerHTML = '<h1>Aprendendo a somar até dez com os dedos</h1><div class="sub">Adição até 10 · Pré e 1º ano</div>' +
     '<div class="cena">' + mao(3, "e", PELES[1]) + '<img src="img/dd_batata.png" alt="Sr. Batata, o mascote">' + mao(2, "d", PELES[0]) + '</div>' +
     '<div class="nomef vazio" id="nomef">escreva o seu nome ali embaixo</div>';
   d.appendChild(c);
